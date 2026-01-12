@@ -1,13 +1,14 @@
 ---
 import { db, Todos } from 'astro:db';
 import Layout from '../layouts/Layout.astro';
+import TodosComponent from '../components/todos.vue';
 
 const todos = await db.select().from(Todos);
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-	{todos.map((todo) => <p>{todo.name}</p>)}
+	<div class="wrapper flow">
+		<h1>Groceries</h1>
+		<TodosComponent todos={todos} />
+	</div>
 </Layout>
