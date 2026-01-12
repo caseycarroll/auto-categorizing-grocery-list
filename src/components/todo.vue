@@ -1,14 +1,15 @@
-<script setup>
-import { ref, onMounted } from 'vue'
+<script setup lang="ts">
+interface Props {
+    checked: boolean;
+    name: string;
+}
 
-const props = defineProps({
-    checked: Boolean,
-    name: String
-});
+const props = defineProps<Props>();
+
 
 </script>
 
 <template>
-  <input type="checkbox" id="test" checked={{props.checked}} />
+  <input type="checkbox" id="test" :checked="props.checked" />
   <label for="test">{{props.name}}</label>
 </template>
