@@ -18,25 +18,14 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
 
 <template>
     <li class="cluster todo-item">
-      <input 
-        type="checkbox" 
-        :id="name" 
-        v-model="checked" />
-      <label :for="name">{{name}}</label>
-      <select 
-        v-if="isEditable" 
-        v-model="selectedCategory" 
-        :id="selectedCategory + '-' + id" 
-        title="Item category">
-        <option 
-            v-for="category in categoryOptions" 
-            :key="category"
-            :value="category"
-            >
-                {{category}}
-        </option>
-      </select>
-      <button v-if="isEditable" @click="$emit('delete', id)">Delete</button>
+        <input type="checkbox" :id="name" v-model="checked" />
+        <label :for="name" :class="checked && 'text-strikethrough'">{{ name }}</label>
+        <select v-if="isEditable" v-model="selectedCategory" :id="selectedCategory + '-' + id" title="Item category">
+            <option v-for="category in categoryOptions" :key="category" :value="category">
+                {{ category }}
+            </option>
+        </select>
+        <button v-if="isEditable" @click="$emit('delete', id)">Delete</button>
     </li>
 </template>
 
@@ -52,11 +41,13 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
 
     label {
         flex-grow: 1;
+        padding-block: var(--space-md);
     }
 
-    label {
-        padding-block: var(--space-md);
+    .text-strikethrough {
+        text-decoration: line-through;
+        text-decoration-color: var(--color-secondary-foreground);
+        color: var(--color-secondary-foreground);
     }
 }
 </style>
-

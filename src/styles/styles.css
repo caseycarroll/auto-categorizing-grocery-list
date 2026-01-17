@@ -7,6 +7,7 @@
     --radius-lg: 16px;
     --radius-xl: 24px;
     --color-primary-foreground: #222222;
+    --color-secondary-foreground: #555555;
     --leading-fine: 1.2;
     --font-medium: 500;
     --flow-space: var(--space-md);
@@ -66,4 +67,8 @@ label::after {
   padding: 0.5em 0.8em;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-primary-foreground);
+}
+
+header {
+    margin-block-start: var(--space-lg);
 }
