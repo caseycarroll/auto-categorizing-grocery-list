@@ -18,6 +18,8 @@ const todos = await db.select().from(Todos);
 
 <script>
 	import { actions } from 'astro:actions';
+	import type { CategoryUnion } from '../actions/index';
+
     document.addEventListener('checkedChange', async (event: Event) => {
         const customEvent = event as CustomEvent<{ id: number; checked: boolean }>;
         const { id, checked } = customEvent.detail;
@@ -26,10 +28,10 @@ const todos = await db.select().from(Todos);
 		if(error) console.log(error);
     });
 	document.addEventListener('todoAdded', async (event: Event) => {
-        const customEvent = event as CustomEvent<{ id: number; name: string }>;
-        const { id, name } = customEvent.detail;
-        console.log(`Todo with ID ${id} and name ${name} was added`);
-		const { data, error } = await actions.addTodo({ id, name });
+        const customEvent = event as CustomEvent<{ id: number; name: string; category: CategoryUnion }>;
+        const { id, name, category } = customEvent.detail;
+        console.log(`Todo with ID ${id}, name ${name}, and category ${category} was added`);
+		const { data, error } = await actions.addTodo({ id, name, category });
 		if(error) console.log(error);
     });
 	document.addEventListener('todoDeleted', async (event: Event) => {

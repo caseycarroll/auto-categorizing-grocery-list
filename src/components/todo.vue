@@ -3,6 +3,7 @@ interface Props {
     checked: boolean;
     name: string;
     id: number;
+    category: string;
 }
 
 const props = defineProps<Props>();
@@ -26,6 +27,7 @@ const handleChange = (event: Event) => {
         :checked="props.checked" 
         @change="handleChange" />
       <label :for="props.name">{{props.name}}</label>
+      <span class="category">{{props.category}}</span>
       <button @click="$emit('delete', props.id)">Delete</button>
     </li>
 </template>

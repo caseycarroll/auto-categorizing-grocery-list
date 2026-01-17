@@ -6,6 +6,7 @@ interface TodoItem {
     checked: boolean;
     name: string;
     id: number;
+    category: string;
 }
 
 const props = defineProps<{ initialTodos: TodoItem[] }>();
@@ -28,11 +29,12 @@ function addTodo() {
   const newTodo: TodoItem = {
     id: Date.now(),
     name: newTodoName.value.trim(),
-    checked: false
+    checked: false,
+    category: 'Other'
   };
   todos.value.push(newTodo);
   newTodoName.value = '';
-  document.dispatchEvent(new CustomEvent('todoAdded', { detail: { id: newTodo.id, name: newTodo.name } }));
+  document.dispatchEvent(new CustomEvent('todoAdded', { detail: { id: newTodo.id, name: newTodo.name, category: newTodo.category } }));
 }
 
 function handleDelete(id: number) {
@@ -54,6 +56,7 @@ function handleDelete(id: number) {
       :id="todo.id"
       :checked="todo.checked" 
       :name="todo.name"
+      :category="todo.category"
       @delete="(id: number) => handleDelete(id)"
       @checkedChange="(checked: boolean) => handleCheckChanged(todo.id, checked)" />
   </ul>

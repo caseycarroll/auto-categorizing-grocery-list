@@ -3,7 +3,7 @@
 ## Todo
 ~~- delete items~~
 ~~- add category info to schema~~
-- render categories
+~~- render categories~~
 - edit category
 - category view mode
 - auto select category on add
