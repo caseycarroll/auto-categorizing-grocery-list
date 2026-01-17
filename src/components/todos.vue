@@ -9,7 +9,6 @@ interface TodoItem {
 }
 
 const props = defineProps<{ initialTodos: TodoItem[] }>();
-const emit = defineEmits<{ (e: 'checkedChange', id: number, checked: boolean): void }>();
 const todos = ref<TodoItem[]>(props.initialTodos);
 
 function handleCheckChanged(id: number, checked: boolean) {
@@ -18,7 +17,7 @@ function handleCheckChanged(id: number, checked: boolean) {
     return;
   }
   todo.checked = checked;
-  emit('checkedChange', id, checked);
+  document.dispatchEvent(new CustomEvent('checkedChange', { detail: { id, checked } }));
 }
 </script>
 

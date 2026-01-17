@@ -14,3 +14,16 @@ const todos = await db.select().from(Todos);
 			initialTodos={todos} />
 	</div>
 </Layout>
+
+
+<script>
+	import { actions } from 'astro:actions';
+    document.addEventListener('checkedChange', async (event: Event) => {
+        const customEvent = event as CustomEvent<{ id: number; checked: boolean }>;
+        const { id, checked } = customEvent.detail;
+        console.log(`Todo with ID ${id} changed to ${checked}`);
+		const { data, error } = await actions.updateTodo({ id, checked });
+		if(error) console.log(error);
+    });
+</script>
+</script>
