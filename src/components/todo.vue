@@ -3,7 +3,6 @@ import { ref, watch } from 'vue';
 import { categoryOptions } from '../constants/category-options';
 
 interface Props {
-    checked: boolean;
     name: string;
     id: number;
     category: string;
@@ -11,20 +10,16 @@ interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits<{
-    (e: 'checkedChange', checked: boolean): void;
     (e: 'delete', id: number): void;
     (e: 'categoryChange', category: string): void;
 }>();
+const checked = defineModel('checked', { type: Boolean, default: false });
 
 const selectedCategory = ref(props.category);
 watch(selectedCategory, (newCategory) => {
     emit('categoryChange', newCategory);
 });
 
-const checked = ref(props.checked);
-watch(checked, (newChecked) => {
-    emit('checkedChange', newChecked);
-});
 </script>
 
 <template>
@@ -34,7 +29,7 @@ watch(checked, (newChecked) => {
         :id="props.name" 
         v-model="checked" />
       <label :for="props.name">{{props.name}}</label>
-      <select v-model="selectedCategory" :id="category + '-' + props.id" title="Item category">
+      <select v-model="selectedCategory" :id="selectedCategory + '-' + props.id" title="Item category">
         <option 
             v-for="category in categoryOptions" 
             :key="category"

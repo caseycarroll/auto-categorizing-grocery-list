@@ -63,11 +63,11 @@ function handleCategoryChanged(id: number, category: string) {
       v-for="todo in todos" 
       :key="todo.id"
       :id="todo.id"
-      :checked="todo.checked" 
       :name="todo.name"
+      v-model:checked="todo.checked"
+      @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
       :category="todo.category"
-      @delete="(id: number) => handleDelete(id)"
-      @checkedChange="(checked: boolean) => handleCheckChanged(todo.id, checked)"
-      @categoryChange="(category: string) => handleCategoryChanged(todo.id, category)" />
+      @categoryChange="(category: string) => handleCategoryChanged(todo.id, category)"
+      @delete="(id: number) => handleDelete(id)" />
   </ul>
 </template>
