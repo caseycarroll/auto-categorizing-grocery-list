@@ -7,6 +7,7 @@ const Todos = defineTable({
     category: column.text({
       enum: [
         'Bakery',
+        'Baking',
         'Beverages',
         'Cleaning Supplies',
         'Dairy and Eggs',

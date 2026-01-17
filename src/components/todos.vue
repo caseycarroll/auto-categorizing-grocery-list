@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions } from '../constants/category-options';
+import { createGroceryClassifier } from '../libs/index';
 
 interface TodoItem {
     checked: boolean;
@@ -14,6 +15,15 @@ const props = defineProps<{ initialTodos: TodoItem[] }>();
 const todos = ref<TodoItem[]>(props.initialTodos);
 const isEditing = ref(true);
 
+const groceryClassifier = createGroceryClassifier();
+groceryClassifier.train('Organic dairy milk', 'Dairy and Eggs')
+groceryClassifier.train('Organic Red Apples', 'Produce')
+groceryClassifier.train('greEn apples', 'Produce')
+groceryClassifier.train('deoderant', 'Personal Care')
+groceryClassifier.train('butter', 'Dairy and Eggs')
+groceryClassifier.train('Cornstarch', 'Baking')
+groceryClassifier.train('Flour', 'Baking')
+
 const newTodoName = ref('');
 function addTodo() {
   if (!newTodoName.value.trim()) {
@@ -23,7 +33,7 @@ function addTodo() {
     id: Date.now(),
     name: newTodoName.value.trim(),
     checked: false,
-    category: 'Other'
+    category: groceryClassifier.classify(newTodoName.value.trim())
   };
   todos.value.push(newTodo);
   newTodoName.value = '';
