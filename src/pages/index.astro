@@ -24,7 +24,14 @@ const todos = await db.select().from(Todos);
         const customEvent = event as CustomEvent<{ id: number; checked: boolean }>;
         const { id, checked } = customEvent.detail;
         console.log(`Todo with ID ${id} changed to ${checked}`);
-		const { data, error } = await actions.updateTodo({ id, checked });
+		const { data, error } = await actions.updateTodoChecked({ id, checked });
+		if(error) console.log(error);
+    });
+	document.addEventListener('categoryChanged', async (event: Event) => {
+        const customEvent = event as CustomEvent<{ id: number; category: CategoryUnion }>;
+        const { id, category } = customEvent.detail;
+        console.log(`Todo with ID ${id} changed category to ${category}`);
+		const { data, error } = await actions.updateTodoCategory({ id, category });
 		if(error) console.log(error);
     });
 	document.addEventListener('todoAdded', async (event: Event) => {

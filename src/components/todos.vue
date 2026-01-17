@@ -42,6 +42,15 @@ function handleDelete(id: number) {
   document.dispatchEvent(new CustomEvent('todoDeleted', { detail: { id } }));
 }
 
+function handleCategoryChanged(id: number, category: string) {
+  const todo = todos.value.find(todo => todo.id === id);
+  if (!todo) {
+    return;
+  }
+  todo.category = category;
+  document.dispatchEvent(new CustomEvent('categoryChanged', { detail: { id, category } }));
+}
+
 </script>
 
 <template>
@@ -58,6 +67,7 @@ function handleDelete(id: number) {
       :name="todo.name"
       :category="todo.category"
       @delete="(id: number) => handleDelete(id)"
-      @checkedChange="(checked: boolean) => handleCheckChanged(todo.id, checked)" />
+      @checkedChange="(checked: boolean) => handleCheckChanged(todo.id, checked)"
+      @categoryChange="(category: string) => handleCategoryChanged(todo.id, category)" />
   </ul>
 </template>

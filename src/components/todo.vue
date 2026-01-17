@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { categoryOptions } from '../constants/category-options';
 
 interface Props {
@@ -13,9 +13,13 @@ const props = defineProps<Props>();
 const emit = defineEmits<{
     (e: 'checkedChange', checked: boolean): void;
     (e: 'delete', id: number): void;
+    (e: 'categoryChange', category: string): void;
 }>();
 
 const selectedCategory = ref(props.category);
+watch(selectedCategory, (newCategory) => {
+    emit('categoryChange', newCategory);
+});
 
 const handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement;

@@ -8,14 +8,24 @@ const CategoryEnum = z.enum(categoryOptions);
 export type CategoryUnion = z.infer<typeof CategoryEnum>;
 
 export const server = {
-  updateTodo: defineAction({
+  updateTodoChecked: defineAction({
     input: z.object({
       id: z.number(),
-      checked: z.boolean()
+      checked: z.boolean(),
     }),
     handler: async ({ id, checked }: { id: number; checked: boolean }) => {
       await db.update(Todos).set({ checked }).where(eq(Todos.id, id));
       console.log(`Todo with ID ${id} changed to ${checked}`);
+    }
+  }),
+  updateTodoCategory: defineAction({
+    input: z.object({
+      id: z.number(),
+      category: CategoryEnum,
+    }),
+    handler: async ({ id, category }: { id: number; category: CategoryUnion }) => {
+      await db.update(Todos).set({ category }).where(eq(Todos.id, id));
+      console.log(`Todo with ID ${id} changed category to ${category}`);
     }
   }),
   addTodo: defineAction({
