@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
 import { categoryOptions } from '../constants/category-options';
 
 interface Props {
     name: string;
     id: number;
-    category: string;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<{
     (e: 'delete', id: number): void;
-    (e: 'categoryChange', category: string): void;
 }>();
 const checked = defineModel('checked', { type: Boolean, default: false });
-
-const selectedCategory = ref(props.category);
-watch(selectedCategory, (newCategory) => {
-    emit('categoryChange', newCategory);
-});
+const selectedCategory = defineModel('selectedCategory', { default: "Other" });
 
 </script>
 

@@ -18,7 +18,7 @@ const todos = await db.select().from(Todos);
 
 <script>
 	import { actions } from 'astro:actions';
-	import type { CategoryUnion } from '../actions/index';
+	import type { CategoryUnion } from '../constants/category-options';
 
     document.addEventListener('checkedChange', async (event: Event) => {
         const customEvent = event as CustomEvent<{ id: number; checked: boolean }>;

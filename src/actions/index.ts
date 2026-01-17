@@ -1,11 +1,7 @@
 import { defineAction } from 'astro:actions';
 import { db, eq, Todos } from 'astro:db';
 import { z } from 'astro/zod';
-import { categoryOptions } from '../constants/category-options'
-
-const CategoryEnum = z.enum(categoryOptions);
-
-export type CategoryUnion = z.infer<typeof CategoryEnum>;
+import { CategoryEnum, type CategoryUnion } from '../constants/category-options'
 
 export const server = {
   updateTodoChecked: defineAction({
