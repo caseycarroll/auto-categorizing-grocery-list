@@ -21,10 +21,10 @@ watch(selectedCategory, (newCategory) => {
     emit('categoryChange', newCategory);
 });
 
-const handleChange = (event: Event) => {
-    const target = event.target as HTMLInputElement;
-    emit('checkedChange', target.checked);
-};
+const checked = ref(props.checked);
+watch(checked, (newChecked) => {
+    emit('checkedChange', newChecked);
+});
 </script>
 
 <template>
@@ -32,8 +32,7 @@ const handleChange = (event: Event) => {
       <input 
         type="checkbox" 
         :id="props.name" 
-        :checked="props.checked" 
-        @change="handleChange" />
+        v-model="checked" />
       <label :for="props.name">{{props.name}}</label>
       <select v-model="selectedCategory" :id="category + '-' + props.id" title="Item category">
         <option 
