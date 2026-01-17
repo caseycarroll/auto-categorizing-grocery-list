@@ -41,14 +41,14 @@ body {
     padding: var(--space-md);
 }
 
-.cluster {
+[class^="cluster"] {
     display: flex;
     gap: var(--space, 1rem);
     align-items: center;
 }
 
-h1 {
-    margin-block-end: var(--space-md);
+.cluster--space-between {
+    justify-content: space-between;
 }
 
 label {
