@@ -2,16 +2,28 @@
 interface Props {
     checked: boolean;
     name: string;
+    id: number;
 }
 
 const props = defineProps<Props>();
 
+const emit = defineEmits<{
+  (e: 'checkedChange', checked: boolean): void;
+}>();
 
+const handleChange = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    emit('checkedChange', target.checked);
+};
 </script>
 
 <template>
     <li class="todo-item">
-      <input type="checkbox" :id="props.name" :checked="props.checked" />
+      <input 
+        type="checkbox" 
+        :id="props.name" 
+        :checked="props.checked" 
+        @change="handleChange" />
       <label :for="props.name">{{props.name}}</label>
     </li>
 </template>
@@ -36,3 +48,6 @@ const props = defineProps<Props>();
     }
 }
 </style>
+import type idleDirective from 'astro/runtime/client/idle.js';
+import type { number } from 'astro:schema';
+

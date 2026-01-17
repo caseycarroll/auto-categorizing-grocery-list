@@ -23,3 +23,7 @@ body {
     margin: 0 auto;
     padding: var(--space-md);
 }
+
+h1 {
+    margin-block-end: var(--space-md);
+}

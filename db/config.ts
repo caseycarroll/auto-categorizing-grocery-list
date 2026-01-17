@@ -3,7 +3,8 @@ import { column, defineDb, defineTable } from 'astro:db';
 const Todos = defineTable({
   columns: {
     checked: column.boolean(),
-    name: column.text()
+    name: column.text(),
+    id: column.number()
   }
 })
 
