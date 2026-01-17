@@ -16,7 +16,7 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
 </script>
 
 <template>
-    <li class="todo-item">
+    <li class="cluster todo-item">
       <input 
         type="checkbox" 
         :id="props.name" 
@@ -37,13 +37,11 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
 
 <style scoped>
 .todo-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
+    --space: var(--space-md);
     padding-inline: var(--space-md);
 
     border: 1px dashed var(--color-primary-foreground);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
 
     label {
         flex-grow: 1;

@@ -54,20 +54,23 @@ function handleCategoryChanged(id: number, category: string) {
 </script>
 
 <template>
-  <form @submit.prevent="addTodo">
-    <input type="text" v-model="newTodoName">
-    <button type="submit">Add Todo</button>
-  </form>
-  <ul role="list" class="flow">
-    <Todo 
-      v-for="todo in todos" 
-      :key="todo.id"
-      :id="todo.id"
-      :name="todo.name"
-      v-model:checked="todo.checked"
-      @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
-      v-model:selectedCategory="todo.category"
-      @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
-      @delete="(id: number) => handleDelete(id)" />
-  </ul>
+  <div class="flow">
+    <form @submit.prevent="addTodo" class="cluster">
+      <label for="new-todo">New item:</label>
+      <input id="new-todo" type="text" v-model="newTodoName">
+      <button type="submit">Add item</button>
+    </form>
+    <ul role="list" class="flow">
+      <Todo 
+        v-for="todo in todos" 
+        :key="todo.id"
+        :id="todo.id"
+        :name="todo.name"
+        v-model:checked="todo.checked"
+        @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
+        v-model:selectedCategory="todo.category"
+        @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
+        @delete="(id: number) => handleDelete(id)" />
+    </ul>
+  </div>
 </template>

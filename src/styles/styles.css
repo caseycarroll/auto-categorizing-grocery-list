@@ -5,6 +5,7 @@
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 16px;
+    --radius-xl: 24px;
     --color-primary-foreground: #222222;
     --flow-space: var(--space-md);
 }
@@ -22,6 +23,12 @@ body {
     max-width: 600px;
     margin: 0 auto;
     padding: var(--space-md);
+}
+
+.cluster {
+    display: flex;
+    gap: var(--space, 1rem);
+    align-items: center;
 }
 
 h1 {
