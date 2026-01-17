@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { categoryOptions } from '../constants/category-options';
+
 interface Props {
     checked: boolean;
     name: string;
@@ -7,11 +10,13 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-
 const emit = defineEmits<{
-  (e: 'checkedChange', checked: boolean): void;
-  (e: 'delete', id: number): void;
+    (e: 'checkedChange', checked: boolean): void;
+    (e: 'delete', id: number): void;
 }>();
+
+const selectedCategory = ref(props.category);
+
 
 const handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement;
@@ -27,7 +32,9 @@ const handleChange = (event: Event) => {
         :checked="props.checked" 
         @change="handleChange" />
       <label :for="props.name">{{props.name}}</label>
-      <span class="category">{{props.category}}</span>
+      <select v-model="selectedCategory">
+        <option v-for="category in categoryOptions" :key="category">{{category}}</option>
+      </select>
       <button @click="$emit('delete', props.id)">Delete</button>
     </li>
 </template>
