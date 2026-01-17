@@ -5,13 +5,15 @@ export default async function seed() {
 	await db.insert(Todos).values([
 		{
 			checked: true,
-			name: "Laundry",
-			id: 1
+			name: "Apples",
+			id: 1,
+			category: "Produce"
 		},
 		{
 			checked: false,
-			name: "Groceries",
-			id: 2
+			name: "Deoderant",
+			id: 2,
+			category: "Personal Care"
 		}
 	])
 }

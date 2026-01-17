@@ -19,7 +19,7 @@ export const server = {
       name: z.string()
     }),
     handler: async ({ id, name }: { id: number; name: string }) => {
-      await db.insert(Todos).values({ id, name, checked: false });
+      await db.insert(Todos).values({ id, name, checked: false, category: 'Other' });
       console.log(`Todo with ID ${id} and name ${name} was added`);
     }
   }),
