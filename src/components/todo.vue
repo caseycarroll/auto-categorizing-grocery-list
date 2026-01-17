@@ -41,7 +41,9 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
     padding-inline: var(--space-md);
 
     border: 1px dashed var(--color-primary-foreground);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
+
+    background-color: #ffffff;
 
     label {
         flex-grow: 1;

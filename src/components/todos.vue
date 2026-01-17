@@ -54,13 +54,16 @@ function handleCategoryChanged(id: number, category: string) {
 </script>
 
 <template>
-  <div class="flow">
-    <form @submit.prevent="addTodo" class="cluster">
-      <label for="new-todo">New item:</label>
-      <input id="new-todo" type="text" v-model="newTodoName">
-      <button type="submit">Add item</button>
+  <h1>Groceries</h1>
+  <div class="flow-l">
+    <form @submit.prevent="addTodo">
+      <label for="new-todo">New item</label>
+      <div class="cluster">
+        <input id="new-todo" type="text" v-model="newTodoName">
+        <button type="submit">Add item</button>
+      </div>
     </form>
-    <ul role="list" class="flow">
+    <ul role="list" class="flow-sm todo-list">
       <Todo 
         v-for="todo in todos" 
         :key="todo.id"

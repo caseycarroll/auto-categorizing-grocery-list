@@ -8,7 +8,6 @@ const todos = await db.select().from(Todos);
 
 <Layout>
 	<div class="wrapper flow">
-		<h1>Groceries</h1>
 		<TodosComponent 
 			client:load
 			initialTodos={todos} />

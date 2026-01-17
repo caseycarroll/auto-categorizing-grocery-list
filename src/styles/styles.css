@@ -7,6 +7,8 @@
     --radius-lg: 16px;
     --radius-xl: 24px;
     --color-primary-foreground: #222222;
+    --leading-fine: 1.2;
+    --font-medium: 500;
     --flow-space: var(--space-md);
 }
 
@@ -15,8 +17,22 @@ body {
     background-color: #f9f9f9;
 }
 
-.flow > * + * {
-    margin-top: var(--flow-space);
+[class^="flow"] {
+    display: flex; 
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+[class^="flow"] > * + * {
+    margin-block-start: var(--flow-space);
+}
+
+.flow-l > * + * {
+    --flow-space: var(--space-lg);
+}
+
+.flow-sm > * + * {
+    --flow-space: var(--space-sm);
 }
 
 .wrapper {
@@ -33,4 +49,21 @@ body {
 
 h1 {
     margin-block-end: var(--space-md);
+}
+
+label {
+  line-height: var(--leading-fine);
+  font-weight: var(--font-medium);
+}
+
+label::after {
+  content: '\A';
+  white-space: pre;
+}
+
+
+:is(input:not([type='checkbox'], [type='radio'], [type='color']), select, textarea) {
+  padding: 0.5em 0.8em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-primary-foreground);
 }
