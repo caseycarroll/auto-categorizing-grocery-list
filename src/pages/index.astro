@@ -32,5 +32,12 @@ const todos = await db.select().from(Todos);
 		const { data, error } = await actions.addTodo({ id, name });
 		if(error) console.log(error);
     });
+	document.addEventListener('todoDeleted', async (event: Event) => {
+        const customEvent = event as CustomEvent<{ id: number }>;
+        const { id } = customEvent.detail;
+        console.log(`Todo with ID ${id} was deleted`);
+		const { data, error } = await actions.deleteTodo({ id });
+		if(error) console.log(error);
+    });
 </script>
 </script>

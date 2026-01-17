@@ -9,6 +9,7 @@ const props = defineProps<Props>();
 
 const emit = defineEmits<{
   (e: 'checkedChange', checked: boolean): void;
+  (e: 'delete', id: number): void;
 }>();
 
 const handleChange = (event: Event) => {
@@ -25,11 +26,13 @@ const handleChange = (event: Event) => {
         :checked="props.checked" 
         @change="handleChange" />
       <label :for="props.name">{{props.name}}</label>
+      <button @click="$emit('delete', props.id)">Delete</button>
     </li>
 </template>
 
 <style scoped>
 .todo-item {
+    isolation: isolate;
     display: flex;
     align-items: center;
     gap: var(--space-md);
@@ -45,6 +48,10 @@ const handleChange = (event: Event) => {
             inset: 0;
             position: absolute;
         }
+    }
+
+    button {
+        z-index: 1;
     }
 }
 </style>

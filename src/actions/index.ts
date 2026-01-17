@@ -22,5 +22,14 @@ export const server = {
       await db.insert(Todos).values({ id, name, checked: false });
       console.log(`Todo with ID ${id} and name ${name} was added`);
     }
+  }),
+  deleteTodo: defineAction({
+    input: z.object({
+      id: z.number()
+    }),
+    handler: async ({ id }: { id: number }) => {
+      await db.delete(Todos).where(eq(Todos.id, id));
+      console.log(`Todo with ID ${id} was deleted`);
+    }
   })
 }

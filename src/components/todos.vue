@@ -35,6 +35,11 @@ function addTodo() {
   document.dispatchEvent(new CustomEvent('todoAdded', { detail: { id: newTodo.id, name: newTodo.name } }));
 }
 
+function handleDelete(id: number) {
+  todos.value = todos.value.filter(todo => todo.id !== id);
+  document.dispatchEvent(new CustomEvent('todoDeleted', { detail: { id } }));
+}
+
 </script>
 
 <template>
@@ -49,6 +54,7 @@ function addTodo() {
       :id="todo.id"
       :checked="todo.checked" 
       :name="todo.name"
+      @delete="(id: number) => handleDelete(id)"
       @checkedChange="(checked: boolean) => handleCheckChanged(todo.id, checked)" />
   </ul>
 </template>
