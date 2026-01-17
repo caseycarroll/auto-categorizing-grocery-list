@@ -7,7 +7,7 @@
 ~~- edit category UI~~
 ~~- fix click target on checkbox~~
 ~~- persist category~~
-- category view mode
+~~- category view mode~~
 - subgrid for alignment of item name, category selection, etc...
 - auto select category on add
 - train model on manual category edit

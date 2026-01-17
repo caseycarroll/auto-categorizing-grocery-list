@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Todo from './todo.vue';
 import { ref } from 'vue';
+import Todo from './todo.vue';
+import { categoryOptions } from '../constants/category-options';
 
 interface TodoItem {
     checked: boolean;
@@ -11,17 +12,9 @@ interface TodoItem {
 
 const props = defineProps<{ initialTodos: TodoItem[] }>();
 const todos = ref<TodoItem[]>(props.initialTodos);
+const isEditing = ref(true);
+
 const newTodoName = ref('');
-
-function handleCheckChanged(id: number, checked: boolean) {
-  const todo = todos.value.find(todo => todo.id === id);
-  if (!todo) {
-    return;
-  }
-  todo.checked = checked;
-  document.dispatchEvent(new CustomEvent('checkedChange', { detail: { id, checked } }));
-}
-
 function addTodo() {
   if (!newTodoName.value.trim()) {
     return;
@@ -51,13 +44,22 @@ function handleCategoryChanged(id: number, category: string) {
   document.dispatchEvent(new CustomEvent('categoryChanged', { detail: { id, category } }));
 }
 
+function handleCheckChanged(id: number, checked: boolean) {
+  const todo = todos.value.find(todo => todo.id === id);
+  if (!todo) {
+    return;
+  }
+  todo.checked = checked;
+  document.dispatchEvent(new CustomEvent('checkedChange', { detail: { id, checked } }));
+}
+
 </script>
 
 <template>
   <div class="flow">
     <header class="cluster--space-between">
       <h1>Groceries</h1>
-      <button>Toggle View</button>
+      <button @click="isEditing = !isEditing">{{ isEditing ? 'Switch to View' : 'Switch to Edit' }}</button>
     </header>
     <div class="flow-l">
       <form @submit.prevent="addTodo">
@@ -67,18 +69,38 @@ function handleCategoryChanged(id: number, category: string) {
           <button type="submit">Add item</button>
         </div>
       </form>
-      <ul role="list" class="flow-sm todo-list">
-        <Todo 
-          v-for="todo in todos" 
-          :key="todo.id"
-          :id="todo.id"
-          :name="todo.name"
-          v-model:checked="todo.checked"
-          @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
-          v-model:selectedCategory="todo.category"
-          @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
-          @delete="(id: number) => handleDelete(id)" />
-      </ul>
+      <div v-if="isEditing">
+        <ul role="list" class="flow-sm todo-list">
+          <Todo 
+            v-for="todo in todos" 
+            :key="todo.id"
+            :id="todo.id"
+            :name="todo.name"
+            v-model:checked="todo.checked"
+            @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
+            v-model:selectedCategory="todo.category"
+            @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
+            @delete="(id: number) => handleDelete(id)" />
+        </ul>
+      </div>
+      <div v-else class="flow">
+        <div v-for="category in categoryOptions" class="flow-sm">
+          <h2>{{ category }}</h2>
+          <ul role="list" class="flow-sm todo-list">
+            <Todo 
+              v-for="todo in todos.filter(todo => todo.category === category)" 
+              :key="todo.id"
+              :id="todo.id"
+              :name="todo.name"
+              v-model:checked="todo.checked"
+              @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
+              v-model:selectedCategory="todo.category"
+              @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
+              @delete="(id: number) => handleDelete(id)"
+              :is-editable="false" />
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>

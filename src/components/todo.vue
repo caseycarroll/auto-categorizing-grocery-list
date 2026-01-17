@@ -4,9 +4,10 @@ import { categoryOptions } from '../constants/category-options';
 interface Props {
     name: string;
     id: number;
+    isEditable?: boolean;
 }
 
-const props = defineProps<Props>();
+const { name, id, isEditable = true } = defineProps<Props>();
 const emit = defineEmits<{
     (e: 'delete', id: number): void;
 }>();
@@ -19,10 +20,14 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
     <li class="cluster todo-item">
       <input 
         type="checkbox" 
-        :id="props.name" 
+        :id="name" 
         v-model="checked" />
-      <label :for="props.name">{{props.name}}</label>
-      <select v-model="selectedCategory" :id="selectedCategory + '-' + props.id" title="Item category">
+      <label :for="name">{{name}}</label>
+      <select 
+        v-if="isEditable" 
+        v-model="selectedCategory" 
+        :id="selectedCategory + '-' + id" 
+        title="Item category">
         <option 
             v-for="category in categoryOptions" 
             :key="category"
@@ -31,7 +36,7 @@ const selectedCategory = defineModel('selectedCategory', { default: "Other" });
                 {{category}}
         </option>
       </select>
-      <button @click="$emit('delete', props.id)">Delete</button>
+      <button v-if="isEditable" @click="$emit('delete', id)">Delete</button>
     </li>
 </template>
 
