@@ -25,5 +25,12 @@ const todos = await db.select().from(Todos);
 		const { data, error } = await actions.updateTodo({ id, checked });
 		if(error) console.log(error);
     });
+	document.addEventListener('todoAdded', async (event: Event) => {
+        const customEvent = event as CustomEvent<{ id: number; name: string }>;
+        const { id, name } = customEvent.detail;
+        console.log(`Todo with ID ${id} and name ${name} was added`);
+		const { data, error } = await actions.addTodo({ id, name });
+		if(error) console.log(error);
+    });
 </script>
 </script>

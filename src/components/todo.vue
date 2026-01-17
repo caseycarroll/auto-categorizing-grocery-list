@@ -48,6 +48,4 @@ const handleChange = (event: Event) => {
     }
 }
 </style>
-import type idleDirective from 'astro/runtime/client/idle.js';
-import type { number } from 'astro:schema';
 
