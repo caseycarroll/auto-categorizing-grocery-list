@@ -13,39 +13,3 @@ const todos = await db.select().from(Todos);
 			initialTodos={todos} />
 	</div>
 </Layout>
-
-
-<script>
-	import { actions } from 'astro:actions';
-	import type { CategoryUnion } from '../constants/category-options';
-
-    document.addEventListener('checkedChange', async (event: Event) => {
-        const customEvent = event as CustomEvent<{ id: number; checked: boolean }>;
-        const { id, checked } = customEvent.detail;
-        console.log(`Todo with ID ${id} changed to ${checked}`);
-		const { data, error } = await actions.updateTodoChecked({ id, checked });
-		if(error) console.log(error);
-    });
-	document.addEventListener('categoryChanged', async (event: Event) => {
-        const customEvent = event as CustomEvent<{ id: number; category: CategoryUnion }>;
-        const { id, category } = customEvent.detail;
-        console.log(`Todo with ID ${id} changed category to ${category}`);
-		const { data, error } = await actions.updateTodoCategory({ id, category });
-		if(error) console.log(error);
-    });
-	document.addEventListener('todoAdded', async (event: Event) => {
-        const customEvent = event as CustomEvent<{ id: number; name: string; category: CategoryUnion }>;
-        const { id, name, category } = customEvent.detail;
-        console.log(`Todo with ID ${id}, name ${name}, and category ${category} was added`);
-		const { data, error } = await actions.addTodo({ id, name, category });
-		if(error) console.log(error);
-    });
-	document.addEventListener('todoDeleted', async (event: Event) => {
-        const customEvent = event as CustomEvent<{ id: number }>;
-        const { id } = customEvent.detail;
-        console.log(`Todo with ID ${id} was deleted`);
-		const { data, error } = await actions.deleteTodo({ id });
-		if(error) console.log(error);
-    });
-</script>
-</script>

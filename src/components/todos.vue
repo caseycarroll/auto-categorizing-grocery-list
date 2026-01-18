@@ -37,27 +37,30 @@ async function addTodo() {
   if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
-function handleDelete(id: number) {
+async function handleDelete(id: number) {
   todos.value = todos.value.filter(todo => todo.id !== id);
-  document.dispatchEvent(new CustomEvent('todoDeleted', { detail: { id } }));
+  const { error } = await actions.deleteTodo({ id });
+  if(error) console.log('Error deleting todo:', error);
 }
 
-function handleCategoryChanged(id: number, category: CategoryUnion) {
+async function handleCategoryChanged(id: number, category: CategoryUnion) {
   const todo = todos.value.find(todo => todo.id === id);
   if (!todo) {
     return;
   }
   todo.category = category;
-  document.dispatchEvent(new CustomEvent('categoryChanged', { detail: { id, category } }));
+  const { error } = await actions.updateTodoCategory({ id, category });
+  if(error) console.log('Error updating todo category:', error);
 }
 
-function handleCheckChanged(id: number, checked: boolean) {
+async function handleCheckChanged(id: number, checked: boolean) {
   const todo = todos.value.find(todo => todo.id === id);
   if (!todo) {
     return;
   }
   todo.checked = checked;
-  document.dispatchEvent(new CustomEvent('checkedChange', { detail: { id, checked } }));
+  const { error } = await actions.updateTodoChecked({ id, checked });
+  if(error) console.log('Error updating todo checked status:', error);
 }
 
 </script>
