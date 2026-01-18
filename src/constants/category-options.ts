@@ -6,7 +6,7 @@ export const categoryOptions = [
   'Cleaning Supplies',
   'Dairy and Eggs',
   'Frozen',
-  'Meat and Seafood',
+  'Deli',
   'Other',
   'Pantry',
   'Personal Care',

@@ -25,7 +25,7 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
                 {{ category }}
             </option>
         </select>
-        <button v-if="isEditable" @click="$emit('delete', id)">Delete</button>
+        <button v-if="isEditable" @click="$emit('delete', id)" title="delete item" class="delete-btn">❌</button>
     </li>
 </template>
 
@@ -44,10 +44,22 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
         padding-block: var(--space-md);
     }
 
+    input[type="checkbox"] {
+        transform: translateY(0.2ex);
+    }
+
     .text-strikethrough {
         text-decoration: line-through;
         text-decoration-color: var(--color-secondary-foreground);
         color: var(--color-secondary-foreground);
     }
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    padding: 0.25rem;
 }
 </style>

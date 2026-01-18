@@ -62,23 +62,23 @@ function buildGroceryMemory() {
     classifier.train('heavy cream', 'Dairy and Eggs');
     classifier.train('half and half', 'Dairy and Eggs');
 
-    // Meat and Seafood
-    classifier.train('chicken breast boneless', 'Meat and Seafood');
-    classifier.train('chicken thighs', 'Meat and Seafood');
-    classifier.train('beef ground lean', 'Meat and Seafood');
-    classifier.train('steak ribeye', 'Meat and Seafood');
-    classifier.train('pork chops', 'Meat and Seafood');
-    classifier.train('bacon strips', 'Meat and Seafood');
-    classifier.train('sausage Italian', 'Meat and Seafood');
-    classifier.train('turkey breast deli', 'Meat and Seafood');
-    classifier.train('ham sliced', 'Meat and Seafood');
-    classifier.train('salmon fresh fillet', 'Meat and Seafood');
-    classifier.train('shrimp raw', 'Meat and Seafood');
-    classifier.train('tilapia fillets', 'Meat and Seafood');
-    classifier.train('turkey ground', 'Meat and Seafood');
-    classifier.train('steak sirloin', 'Meat and Seafood');
-    classifier.train('beef steak', 'Meat and Seafood');
-    classifier.train('beef roast', 'Meat and Seafood');
+    // Deli
+    classifier.train('chicken breast boneless', 'Deli');
+    classifier.train('chicken thighs', 'Deli');
+    classifier.train('beef ground lean', 'Deli');
+    classifier.train('steak ribeye', 'Deli');
+    classifier.train('pork chops', 'Deli');
+    classifier.train('bacon strips', 'Deli');
+    classifier.train('sausage Italian', 'Deli');
+    classifier.train('turkey breast deli', 'Deli');
+    classifier.train('ham sliced', 'Deli');
+    classifier.train('salmon fresh fillet', 'Deli');
+    classifier.train('shrimp raw', 'Deli');
+    classifier.train('tilapia fillets', 'Deli');
+    classifier.train('turkey ground', 'Deli');
+    classifier.train('steak sirloin', 'Deli');
+    classifier.train('beef steak', 'Deli');
+    classifier.train('beef roast', 'Deli');
 
     // Bakery
     classifier.train('bread white sliced', 'Bakery');
