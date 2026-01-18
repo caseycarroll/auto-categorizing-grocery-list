@@ -60,7 +60,7 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
             if(results.length === 0) return "Other";
             
             const [first, second] = results;
-            const isLowConfidence = (first && second) && (first.score - second.score < 0.5);
+            const isLowConfidence = (first && second) && (first.score - second.score < 0.3);
             return isLowConfidence || !first ? "Other": first.categoryKey;
         },
         // for testing
