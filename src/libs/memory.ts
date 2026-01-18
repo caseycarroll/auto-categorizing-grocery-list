@@ -94,24 +94,22 @@ function buildGroceryMemory() {
     classifier.train('cookies chocolate chip', 'Bakery');
     classifier.train('tortillas flour', 'Bakery');
     classifier.train('pita bread', 'Bakery');
-
-    // Baking
-    classifier.train('flour all purpose', 'Baking');
-    classifier.train('sugar granulated white', 'Baking');
-    classifier.train('sugar brown', 'Baking');
-    classifier.train('baking powder', 'Baking');
-    classifier.train('baking soda', 'Baking');
-    classifier.train('yeast active dry', 'Baking');
-    classifier.train('vanilla extract pure', 'Baking');
-    classifier.train('chocolate chips semi sweet', 'Baking');
-    classifier.train('cocoa powder unsweetened', 'Baking');
-    classifier.train('cornstarch', 'Baking');
-    classifier.train('powdered sugar', 'Baking');
-    classifier.train('cake mix', 'Baking');
-    classifier.train('brownie mix', 'Baking');
-    classifier.train('shortening vegetable', 'Baking');
-
+    
     // Pantry
+    classifier.train('flour all purpose', 'Pantry');
+    classifier.train('sugar granulated white', 'Pantry');
+    classifier.train('sugar brown', 'Pantry');
+    classifier.train('baking powder', 'Pantry');
+    classifier.train('baking soda', 'Pantry');
+    classifier.train('yeast active dry', 'Pantry');
+    classifier.train('vanilla extract pure', 'Pantry');
+    classifier.train('chocolate chips semi sweet', 'Pantry');
+    classifier.train('cocoa powder unsweetened', 'Pantry');
+    classifier.train('cornstarch', 'Pantry');
+    classifier.train('powdered sugar', 'Pantry');
+    classifier.train('cake mix', 'Pantry');
+    classifier.train('brownie mix', 'Pantry');
+    classifier.train('shortening vegetable', 'Pantry');
     classifier.train('pasta spaghetti', 'Pantry');
     classifier.train('pasta penne', 'Pantry');
     classifier.train('rice white long grain', 'Pantry');
