@@ -14,11 +14,13 @@ const todos = await db.select().from(Todos);
 
 <Layout>
 	{session ? (
+		<div>
 		<button id="sign-out"><span>Sign out</span></button>
 		<div class="wrapper flow">
 			<TodosComponent 
 				client:load
 				initialTodos={todos} />
+		</div>
 		</div>
 	) : (
 		<div style="height: 100%; display: grid; place-items:center;">
@@ -27,11 +29,11 @@ const todos = await db.select().from(Todos);
 				<div class="flow-md">
 					<div class="flow-sm">
 						<label for="email">Email</label>
-						<input id="email" type="email">
+						<input id="email" type="email" />
 					</div>
 					<div class="flow-sm">
 						<label for="pass">Password</label>
-						<input id="pass" type="password"> 
+						<input id="pass" type="password" /> 
 					</div>
 					<div class="cluster--space-between">
 						<button id="sign-up" class="secondary"><span>Sign up</span></button>
@@ -44,14 +46,34 @@ const todos = await db.select().from(Todos);
 </Layout>
 
 <script>
-	const { signIn, signOut } = await import('../libs/auth-client.ts');
+	const { signIn, signUp, signOut } = await import('../libs/auth-client.ts');
 	document.getElementById('sign-in')?.addEventListener('click', async () => {
+		const email = document.getElementById('email') as HTMLInputElement;
+		const password = document.getElementById('pass') as HTMLInputElement;
+		if(!email?.value.trim() || !password?.value.trim()) {
+			return;
+		}
 		const { data, error } = await signIn.email({
-			email,
-			password,
-		})
+			email: email.value,
+			password: password.value,
+		});
+	});
+	document.getElementById('sign-up')?.addEventListener('click', async () => {
+		const email = document.getElementById('email') as HTMLInputElement;
+		const password = document.getElementById('pass') as HTMLInputElement;
+		if(!email?.value.trim() || !password?.value.trim()) {
+			return;
+		}
+		const { data, error } = await signUp.email({
+			email: email.value,
+			password: password.value,
+			name: 'test'
+		});
 	});
 	document.getElementById('sign-out')?.addEventListener('click', async () => {
-
+		const { error } = await signOut();
+		if (error) {
+			console.error('Error signing out:', error);
+		}
 	});
 </script>
