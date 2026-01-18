@@ -113,10 +113,11 @@ test('memory', () => {
     expect(newClassifier.classify('cosmic apples')).toEqual('Produce');
 })
 
-test('improved memory efficacy', () => {
+test('larger pre-trained memory', () => {
     const classifier = createGroceryClassifier(groceryMemory);
 
     // Test various items that should be correctly classified with pre-trained memory
     expect(classifier.classify('milk')).toEqual('Dairy and Eggs');
     expect(classifier.classify('toothpaste')).toEqual('Personal Care');
+    expect(classifier.classify('butter')).toEqual('Dairy and Eggs');
 })
