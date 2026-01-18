@@ -26,12 +26,16 @@ body {
     justify-content: flex-start;
 }
 
-[class^="flow"]>*+* {
+[class^="flow"] > *+* {
     margin-block-start: var(--flow-space);
 }
 
 .flow-l>*+* {
     --flow-space: var(--space-lg);
+}
+
+.flow-md>*+*{
+    --flow-space: var(--space-md);
 }
 
 .flow-sm>*+* {
@@ -110,5 +114,12 @@ button {
     &:active>span {
         transform: translateY(-1px);
         transition: transform 35ms;
+    }
+}
+
+button.secondary {
+    background-color: hsl(52, 32%, 86%);
+    & > span {
+        background-color: hsl(51, 100%, 89%);
     }
 }

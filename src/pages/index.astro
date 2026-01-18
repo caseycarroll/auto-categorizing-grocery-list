@@ -24,7 +24,20 @@ const todos = await db.select().from(Todos);
 		<div style="height: 100%; display: grid; place-items:center;">
 			<div class="flow-l">
 				<h1>🛒 Grocery List</h1>
-				<button id="sign-in"><span>Sign in</span></button>
+				<div class="flow-md">
+					<div class="flow-sm">
+						<label for="email">Email</label>
+						<input id="email" type="email">
+					</div>
+					<div class="flow-sm">
+						<label for="pass">Password</label>
+						<input id="pass" type="password"> 
+					</div>
+					<div class="cluster--space-between">
+						<button id="sign-up" class="secondary"><span>Sign up</span></button>
+						<button id="sign-in"><span>Sign in</span></button>
+					</div>
+				</div>
 			</div>
 		</div>		
 	)}
@@ -33,7 +46,10 @@ const todos = await db.select().from(Todos);
 <script>
 	const { signIn, signOut } = await import('../libs/auth-client.ts');
 	document.getElementById('sign-in')?.addEventListener('click', async () => {
-		
+		const { data, error } = await signIn.email({
+			email,
+			password,
+		})
 	});
 	document.getElementById('sign-out')?.addEventListener('click', async () => {
 
