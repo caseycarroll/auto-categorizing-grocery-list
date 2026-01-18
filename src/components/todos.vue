@@ -68,7 +68,7 @@ async function handleCheckChanged(id: number, checked: boolean) {
 </script>
 
 <template>
-  <div class="flow">
+  <div class="flow-l">
     <header class="cluster--space-between">
       <h1>Groceries</h1>
       <button @click="isEditing = !isEditing">

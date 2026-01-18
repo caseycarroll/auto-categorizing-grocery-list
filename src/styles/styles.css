@@ -2,6 +2,7 @@
     --space-sm: 0.5rem;
     --space-md: 1rem;
     --space-lg: 2rem;
+    --space-xl: 4rem;
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 16px;
@@ -64,14 +65,20 @@ label::after {
 }
 
 
-:is(input:not([type='checkbox'], [type='radio'], [type='color']), select, textarea) {
+:is(input:not([type='checkbox'], [type='radio'], [type='color']), textarea) {
     padding: 0.5em 0.8em;
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-primary-foreground);
 }
 
+:is(select) {
+    padding: 0.25em 0.5em;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-primary-foreground);
+}
+
 header {
-    margin-block-start: var(--space-lg);
+    margin-block-start: var(--space-xl);
 }
 
 button {
