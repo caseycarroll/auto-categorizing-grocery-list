@@ -43,11 +43,13 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
                 .map(([categoryKey, value]) => {
                     let itemsInCategory = value ?? 0;
                     itemsInCategory = itemsInCategory + 1;
-                    const baseScore = Math.log(itemsInCategory) - Math.log(totalItemsTrained);
+                    const priorWeight = 0.3; // Lower weight = less influence of category size
+                    const baseScore = priorWeight * (Math.log(itemsInCategory) - Math.log(totalItemsTrained));
 
+                    const smoothing = 0.1; // Lower smoothing = more weight to known tokens
                     const tokenScore = tokens.reduce((total, token) => {
                         const tokenCount = wordCounts?.[categoryKey]?.[token] ?? 0;
-                        return total + Math.log(tokenCount + 1) - Math.log(itemsInCategory + vocabulary.size);
+                        return total + Math.log(tokenCount + smoothing) - Math.log(itemsInCategory + smoothing * vocabulary.size);
                     }, 0);
 
                     return {

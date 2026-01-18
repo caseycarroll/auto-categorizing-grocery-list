@@ -60,5 +60,27 @@ export const server = {
       console.log('ailse', groceryClassifier.classify(name))
       return groceryClassifier.classify(name);
     }
+  }),
+  trainClassifier: defineAction({
+    input: z.object({
+      name: z.string(),
+      category: CategoryEnum
+    }),
+    handler: async ({ name, category }: { name: string; category: CategoryUnion }) => {
+      const probabilities = await db.select().from(Probabilities).limit(1);
+      const memory = probabilities[0];
+      const groceryClassifier = createGroceryClassifier({
+        ...memory,
+        vocabulary: new Set(memory.vocabulary as unknown as string[])
+      } as ClassifierMemory);
+      groceryClassifier.train(name, category);
+      await db.update(Probabilities).set({
+        wordCounts: groceryClassifier.wordCounts,
+        categoryTotals: groceryClassifier.categoryTotals,
+        vocabulary: Array.from(groceryClassifier.vocabulary),
+        totalItemsTrained: groceryClassifier.totalItemsTrained
+      }).where(eq(Probabilities.id, memory.id));
+      console.log('Trained classifier with item:', name, 'Category:', category);
+    }
   })
 }

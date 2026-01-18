@@ -118,4 +118,5 @@ test('improved memory efficacy', () => {
 
     // Test various items that should be correctly classified with pre-trained memory
     expect(classifier.classify('milk')).toEqual('Dairy and Eggs');
+    expect(classifier.classify('toothpaste')).toEqual('Personal Care');
 })

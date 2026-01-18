@@ -51,6 +51,8 @@ async function handleCategoryChanged(id: number, category: CategoryUnion) {
   todo.category = category;
   const { error } = await actions.updateTodoCategory({ id, category });
   if(error) console.log('Error updating todo category:', error);
+  const { error: trainError } = await actions.trainClassifier({ name: todo.name, category });
+  if(trainError) console.log('Error training classifier:', trainError);
 }
 
 async function handleCheckChanged(id: number, checked: boolean) {
@@ -75,7 +77,7 @@ async function handleCheckChanged(id: number, checked: boolean) {
       <form @submit.prevent="addTodo">
         <label for="new-todo">New item</label>
         <div class="cluster">
-          <input id="new-todo" type="text" v-model="newTodoName">
+          <input id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
           <button type="submit">Add item</button>
         </div>
       </form>

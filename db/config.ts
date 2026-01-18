@@ -13,6 +13,7 @@ const Todos = defineTable({
 
 const Probabilities = defineTable({
   columns: {
+    id: column.number(),
     wordCounts: column.json(),
     categoryTotals: column.json(),
     vocabulary: column.json(),
