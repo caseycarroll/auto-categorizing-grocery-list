@@ -1,4 +1,5 @@
-import { db, Todos } from 'astro:db';
+import { db, Probabilities, Todos } from 'astro:db';
+import { groceryMemory } from '../src/libs/memory';
 
 // https://astro.build/db/seed
 export default async function seed() {
@@ -15,5 +16,8 @@ export default async function seed() {
 			id: 2,
 			category: "Personal Care"
 		}
+	])
+	await db.insert(Probabilities).values([
+		groceryMemory
 	])
 }

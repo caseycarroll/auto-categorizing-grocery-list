@@ -2,8 +2,7 @@
 import { ref } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions } from '../constants/category-options';
-import { createGroceryClassifier } from '../libs/index';
-import { groceryMemory } from '../libs/memory';
+import { actions } from 'astro:actions';
 
 interface TodoItem {
     checked: boolean;
@@ -16,18 +15,20 @@ const props = defineProps<{ initialTodos: TodoItem[] }>();
 const todos = ref<TodoItem[]>(props.initialTodos);
 const isEditing = ref(true);
 
-const groceryClassifier = createGroceryClassifier(groceryMemory);
-
 const newTodoName = ref('');
-function addTodo() {
+
+async function addTodo() {
   if (!newTodoName.value.trim()) {
     return;
   }
+  const { data, error } = await actions.classifyItem({ name: newTodoName.value });
+  if(error) console.log('Error classifying item:', error);
+  
   const newTodo: TodoItem = {
     id: Date.now(),
     name: newTodoName.value.trim(),
     checked: false,
-    category: groceryClassifier.classify(newTodoName.value.trim())
+    category: data || 'Other'
   };
   todos.value.push(newTodo);
   newTodoName.value = '';

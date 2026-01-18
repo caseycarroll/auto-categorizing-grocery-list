@@ -11,9 +11,19 @@ const Todos = defineTable({
   }
 })
 
+const Probabilities = defineTable({
+  columns: {
+    wordCounts: column.json(),
+    categoryTotals: column.json(),
+    vocabulary: column.json(),
+    totalItemsTrained: column.number()
+  }
+});
+
 // https://astro.build/db/config
 export default defineDb({
   tables: {
-    Todos
+    Todos,
+    Probabilities
   }
 });

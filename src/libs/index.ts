@@ -10,7 +10,7 @@ export const tokenize = (phrase: string) =>
         .filter(word => word.length > 2) // remove articles
         .map((word: string) => word.toLocaleLowerCase()) // normalize casing
 
-type ClassifierMemory = {
+export type ClassifierMemory = {
     wordCounts: WordCounts;
     categoryTotals: Record<CategoryKey, number>;
     vocabulary: Set<string>;
@@ -35,7 +35,7 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
             })
             totalItemsTrained++;
         },
-        classify: (phrase: string) => {
+        classify: (phrase: string): CategoryUnion => {
             const tokens = tokenize(phrase);
 
             const results = Object.entries(categoryTotals)
@@ -61,7 +61,7 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
             
             const [first, second] = results;
             const isLowConfidence = (first && second) && (first.score - second.score < 0.3);
-            return isLowConfidence || !first ? "Other": first.categoryKey;
+            return isLowConfidence || !first ? "Other": first.categoryKey as CategoryUnion;
         },
         // for testing
         get vocabulary() { return vocabulary; },

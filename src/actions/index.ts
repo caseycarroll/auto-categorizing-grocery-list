@@ -1,7 +1,8 @@
 import { defineAction } from 'astro:actions';
-import { db, eq, Todos } from 'astro:db';
+import { db, eq, Probabilities, Todos } from 'astro:db';
 import { z } from 'astro/zod';
 import { CategoryEnum, type CategoryUnion } from '../constants/category-options'
+import { createGroceryClassifier, type ClassifierMemory } from '../libs';
 
 export const server = {
   updateTodoChecked: defineAction({
@@ -42,6 +43,18 @@ export const server = {
     handler: async ({ id }: { id: number }) => {
       await db.delete(Todos).where(eq(Todos.id, id));
       console.log(`Todo with ID ${id} was deleted`);
+    }
+  }),
+  classifyItem: defineAction({
+    input: z.object({
+      name: z.string()
+    }),
+    handler: async ({ name }: { name: string }) => {
+      const probabilities = await db.select().from(Probabilities).limit(1);
+      const groceryClassifier = createGroceryClassifier(probabilities[0] as ClassifierMemory);
+      console.log('Classifying item:', name);
+      console.log('ailse', groceryClassifier.classify(name))
+      return groceryClassifier.classify(name);
     }
   })
 }
