@@ -1,0 +1,11 @@
+---
+import { db, Todos } from 'astro:db';
+import Layout from '../layouts/Layout.astro';
+import TodosComponent from '../components/todos.vue';
+
+const todos = await db.select().from(Todos);
+---
+
+<TodosComponent 
+    client:load
+    initialTodos={todos} />

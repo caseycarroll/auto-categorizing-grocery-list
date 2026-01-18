@@ -68,14 +68,14 @@ async function handleCheckChanged(id: number, checked: boolean) {
 </script>
 
 <template>
-  <div class="flow-l">
+  <div class="flow">
     <header class="cluster--space-between">
       <h1>Groceries</h1>
       <button @click="isEditing = !isEditing">
         <span>Toggle View</span>
       </button>
     </header>
-    <div class="flow-l">
+    <div class="flow">
       <form @submit.prevent="addTodo">
         <label for="new-todo">New item</label>
         <div class="cluster">

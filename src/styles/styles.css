@@ -20,27 +20,6 @@ body {
     color: var(--color-primary-foreground);
 }
 
-[class^="flow"] {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-[class^="flow"] > *+* {
-    margin-block-start: var(--flow-space);
-}
-
-.flow-l>*+* {
-    --flow-space: var(--space-lg);
-}
-
-.flow-md>*+*{
-    --flow-space: var(--space-md);
-}
-
-.flow-sm>*+* {
-    --flow-space: var(--space-sm);
-}
 
 .wrapper {
     max-width: 600px;
