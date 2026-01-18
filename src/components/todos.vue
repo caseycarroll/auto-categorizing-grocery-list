@@ -71,14 +71,18 @@ async function handleCheckChanged(id: number, checked: boolean) {
   <div class="flow">
     <header class="cluster--space-between">
       <h1>Groceries</h1>
-      <button @click="isEditing = !isEditing">{{ isEditing ? 'Switch to View' : 'Switch to Edit' }}</button>
+      <button @click="isEditing = !isEditing">
+        <span>Toggle View</span>
+      </button>
     </header>
     <div class="flow-l">
       <form @submit.prevent="addTodo">
         <label for="new-todo">New item</label>
         <div class="cluster">
           <input id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
-          <button type="submit">Add item</button>
+          <button type="submit">
+            <span>Add item</span>
+          </button>
         </div>
       </form>
       <div v-if="isEditing">
