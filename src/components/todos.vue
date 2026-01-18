@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Todo from './todo.vue';
-import { categoryOptions } from '../constants/category-options';
+import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 import { actions } from 'astro:actions';
 
 interface TodoItem {
     checked: boolean;
     name: string;
     id: number;
-    category: string;
+    category: CategoryUnion;
 }
 
 const props = defineProps<{ initialTodos: TodoItem[] }>();
@@ -21,18 +21,20 @@ async function addTodo() {
   if (!newTodoName.value.trim()) {
     return;
   }
-  const { data, error } = await actions.classifyItem({ name: newTodoName.value });
-  if(error) console.log('Error classifying item:', error);
-  
+  const { data: classification, error:classificationError } = await actions.classifyItem({ name: newTodoName.value });
+  if(classificationError) console.log('Error classifying item:', classificationError);
+
   const newTodo: TodoItem = {
     id: Date.now(),
     name: newTodoName.value.trim(),
     checked: false,
-    category: data || 'Other'
+    category: classification || 'Other'
   };
   todos.value.push(newTodo);
   newTodoName.value = '';
-  document.dispatchEvent(new CustomEvent('todoAdded', { detail: { id: newTodo.id, name: newTodo.name, category: newTodo.category } }));
+  
+  const { error: addTodoError } = await actions.addTodo({ id: newTodo.id, name: newTodo.name, category: newTodo.category });
+  if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
 function handleDelete(id: number) {
@@ -40,7 +42,7 @@ function handleDelete(id: number) {
   document.dispatchEvent(new CustomEvent('todoDeleted', { detail: { id } }));
 }
 
-function handleCategoryChanged(id: number, category: string) {
+function handleCategoryChanged(id: number, category: CategoryUnion) {
   const todo = todos.value.find(todo => todo.id === id);
   if (!todo) {
     return;
@@ -84,7 +86,7 @@ function handleCheckChanged(id: number, checked: boolean) {
             v-model:checked="todo.checked"
             @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
             v-model:selectedCategory="todo.category"
-            @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
+            @update:selectedCategory="(category: CategoryUnion) => handleCategoryChanged(todo.id, category)"
             @delete="(id: number) => handleDelete(id)" />
         </ul>
       </div>
@@ -100,7 +102,7 @@ function handleCheckChanged(id: number, checked: boolean) {
               v-model:checked="todo.checked"
               @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
               v-model:selectedCategory="todo.category"
-              @update:selectedCategory="(category: string) => handleCategoryChanged(todo.id, category)"
+              @update:selectedCategory="(category: CategoryUnion) => handleCategoryChanged(todo.id, category)"
               @delete="(id: number) => handleDelete(id)"
               :is-editable="false" />
           </ul>

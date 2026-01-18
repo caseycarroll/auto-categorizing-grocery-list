@@ -18,6 +18,9 @@ export default async function seed() {
 		}
 	])
 	await db.insert(Probabilities).values([
-		groceryMemory
+		{
+			...groceryMemory,
+			vocabulary: Array.from(groceryMemory.vocabulary)
+		}
 	])
 }

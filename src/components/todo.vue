@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { categoryOptions } from '../constants/category-options';
+import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 
 interface Props {
     name: string;
@@ -12,7 +12,7 @@ const emit = defineEmits<{
     (e: 'delete', id: number): void;
 }>();
 const checked = defineModel('checked', { type: Boolean, default: false });
-const selectedCategory = defineModel('selectedCategory', { default: "Other" });
+const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { default: "Other" });
 
 </script>
 

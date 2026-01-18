@@ -117,5 +117,5 @@ test('improved memory efficacy', () => {
     const classifier = createGroceryClassifier(groceryMemory);
 
     // Test various items that should be correctly classified with pre-trained memory
-    expect(classifier.classify('carrots')).toEqual('Produce');
+    expect(classifier.classify('milk')).toEqual('Dairy and Eggs');
 })
