@@ -137,7 +137,6 @@ function buildGroceryMemory() {
     classifier.train('oatmeal rolled oats', 'Pantry');
     classifier.train('cereal corn flakes', 'Pantry');
     classifier.train('tuna canned', 'Pantry');
-    classifier.train('crackers saltine', 'Pantry');
 
     // Snacks
     classifier.train('chips potato', 'Snacks');
@@ -152,6 +151,8 @@ function buildGroceryMemory() {
     classifier.train('crackers cheese', 'Snacks');
     classifier.train('candy chocolate bar', 'Snacks');
     classifier.train('gummy bears', 'Snacks');
+    classifier.train('crackers', 'Snacks');
+    classifier.train('crackers saltine', 'Snacks');
 
     // Frozen
     classifier.train('pizza frozen cheese', 'Frozen');
