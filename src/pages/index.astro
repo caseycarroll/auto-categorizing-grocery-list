@@ -2,14 +2,40 @@
 import { db, Todos } from 'astro:db';
 import Layout from '../layouts/Layout.astro';
 import TodosComponent from '../components/todos.vue';
+import { auth } from "../libs/auth";
+
+export const prerender = false;
+const session = await auth.api.getSession({
+    headers: Astro.request.headers,
+});
 
 const todos = await db.select().from(Todos);
 ---
 
 <Layout>
-	<div class="wrapper flow">
-		<TodosComponent 
-			client:load
-			initialTodos={todos} />
-	</div>
+	{session ? (
+		<button id="sign-out"><span>Sign out</span></button>
+		<div class="wrapper flow">
+			<TodosComponent 
+				client:load
+				initialTodos={todos} />
+		</div>
+	) : (
+		<div style="height: 100%; display: grid; place-items:center;">
+			<div class="flow-l">
+				<h1>🛒 Grocery List</h1>
+				<button id="sign-in"><span>Sign in</span></button>
+			</div>
+		</div>		
+	)}
 </Layout>
+
+<script>
+	const { signIn, signOut } = await import('../libs/auth-client.ts');
+	document.getElementById('sign-in')?.addEventListener('click', async () => {
+		
+	});
+	document.getElementById('sign-out')?.addEventListener('click', async () => {
+
+	});
+</script>

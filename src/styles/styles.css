@@ -82,7 +82,7 @@ header {
 }
 
 button {
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     border: none;
     padding: 0;
     cursor: pointer;
@@ -94,8 +94,8 @@ button {
     &>span {
         will-change: transform;
         display: block;
-        background-color: hsla(186, 44%, 92%, 1);
-        border-radius: var(--radius-sm);
+        background-color: rgb(202, 238, 243);
+        border-radius: var(--radius-md);
         transform: translateY(-3px);
         padding: var(--space-sm) var(--space-md);
         transition:
