@@ -1,4 +1,4 @@
-import { createGroceryClassifier } from './index.js';
+import { createGroceryClassifier } from './grocery-classifier.js';
 
 /**
  * Pre-trained grocery classifier memory with common items across all categories.

@@ -2,7 +2,7 @@ import { defineAction } from 'astro:actions';
 import { db, eq, Probabilities, Todos } from 'astro:db';
 import { z } from 'astro/zod';
 import { CategoryEnum, type CategoryUnion } from '../constants/category-options'
-import { createGroceryClassifier, type ClassifierMemory } from '../libs';
+import { createGroceryClassifier, type ClassifierMemory } from '../libs/grocery-classifier';
 
 export const server = {
   updateTodoChecked: defineAction({

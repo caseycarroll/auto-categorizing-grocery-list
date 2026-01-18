@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { createGroceryClassifier, tokenize } from './index.js'
+import { createGroceryClassifier, tokenize } from './grocery-classifier.js'
 import { groceryMemory } from './memory.js'
 
 function mockTraining(classifier: ReturnType<typeof createGroceryClassifier>) {
