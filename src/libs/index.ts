@@ -43,10 +43,10 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
                 .map(([categoryKey, value]) => {
                     let itemsInCategory = value ?? 0;
                     itemsInCategory = itemsInCategory + 1;
-                    const priorWeight = 0.3; // Lower weight = less influence of category size
+                    const priorWeight = 0.5; // Lower weight = less influence of category size
                     const baseScore = priorWeight * (Math.log(itemsInCategory) - Math.log(totalItemsTrained));
 
-                    const smoothing = 0.1; // Lower smoothing = more weight to known tokens
+                    const smoothing = 0.5; // Lower smoothing = more weight to known tokens
                     const tokenScore = tokens.reduce((total, token) => {
                         const tokenCount = wordCounts?.[categoryKey]?.[token] ?? 0;
                         return total + Math.log(tokenCount + smoothing) - Math.log(itemsInCategory + smoothing * vocabulary.size);
@@ -62,7 +62,7 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
             if(results.length === 0) return "Other";
             
             const [first, second] = results;
-            const isLowConfidence = (first && second) && (first.score - second.score < 0.1);
+            const isLowConfidence = (first && second) && (first.score - second.score < 0.5);
             return isLowConfidence || !first ? "Other": first.categoryKey as CategoryUnion;
         },
         // for testing

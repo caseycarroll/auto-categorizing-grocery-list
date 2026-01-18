@@ -2,7 +2,6 @@ import { z } from 'astro/zod';
 
 export const categoryOptions = [
   'Bakery',
-  'Baking',
   'Beverages',
   'Cleaning Supplies',
   'Dairy and Eggs',

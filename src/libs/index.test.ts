@@ -8,8 +8,8 @@ function mockTraining(classifier: ReturnType<typeof createGroceryClassifier>) {
     classifier.train('greEn apples', 'Produce')
     classifier.train('deoderant', 'Personal Care')
     classifier.train('butter', 'Dairy and Eggs')
-    classifier.train('Cornstarch', 'Baking')
-    classifier.train('Flour', 'Baking')
+    classifier.train('Cornstarch', 'Pantry')
+    classifier.train('Flour', 'Pantry')
     return classifier;
 }
 
@@ -44,15 +44,15 @@ test('word count', () => {
     const trainedClassifier = mockTraining(classifier)
     expect(trainedClassifier.wordCounts).toMatchInlineSnapshot(`
       {
-        "Baking": {
-          "cornstarch": 1,
-          "flour": 1,
-        },
         "Dairy and Eggs": {
           "butter": 1,
           "dairy": 1,
           "milk": 1,
           "organic": 1,
+        },
+        "Pantry": {
+          "cornstarch": 1,
+          "flour": 1,
         },
         "Personal Care": {
           "deoderant": 1,
@@ -72,8 +72,8 @@ test('category word totals', () => {
     const trainedClassifier = mockTraining(classifier)
     expect(trainedClassifier.categoryTotals).toMatchInlineSnapshot(`
       {
-        "Baking": 2,
         "Dairy and Eggs": 4,
+        "Pantry": 2,
         "Personal Care": 1,
         "Produce": 5,
       }
@@ -92,7 +92,7 @@ test('classification of "soy milk" should be Dairy and Eggs', () => {
     expect(trainedClassifier.classify('soy milk')).toEqual('Dairy and Eggs')
 })
 
-test('clasification of "giant purple people eater" should be Other', () => {
+test('classification of "giant purple people eater" should be Other', () => {
     const classifier = createGroceryClassifier();
     const trainedClassifier = mockTraining(classifier);
     expect(trainedClassifier.classify('giant purple people eater')).toEqual('Other')
