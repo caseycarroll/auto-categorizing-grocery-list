@@ -16,5 +16,4 @@ export const categoryOptions = [
 ] as const;
 
 export const CategoryEnum = z.enum(categoryOptions);
-
 export type CategoryUnion = z.infer<typeof CategoryEnum>;
