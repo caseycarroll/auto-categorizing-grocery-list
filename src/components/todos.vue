@@ -86,7 +86,7 @@ async function handleCheckChanged(id: number, checked: boolean) {
         </div>
       </form>
       <div v-if="isEditing">
-        <ul role="list" class="flow-sm todo-list">
+        <ul role="list" class="flow todo-list">
           <Todo 
             v-for="todo in todos" 
             :key="todo.id"
@@ -100,9 +100,9 @@ async function handleCheckChanged(id: number, checked: boolean) {
         </ul>
       </div>
       <div v-else class="flow">
-        <div v-for="category in categoryOptions" class="flow-sm">
+        <div v-for="category in categoryOptions" class="flow">
           <h2>{{ category }}</h2>
-          <ul role="list" class="flow-sm todo-list">
+          <ul role="list" class="flow todo-list">
             <Todo 
               v-for="todo in todos.filter(todo => todo.category === category)" 
               :key="todo.id"

@@ -31,8 +31,8 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
 
 <style scoped>
 .todo-item {
-    --space: var(--space-md);
-    padding-inline: var(--space-md);
+    --space: var(--space-m);
+    padding-inline: var(--space-m);
 
     border: 1px dashed var(--color-primary-foreground);
     border-radius: var(--radius-lg);
@@ -41,7 +41,7 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
 
     label {
         flex-grow: 1;
-        padding-block: var(--space-md);
+        padding-block: var(--space-m);
     }
 
     input[type="checkbox"] {
