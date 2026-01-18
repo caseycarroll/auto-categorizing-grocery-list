@@ -1,0 +1,9 @@
+- Authentication
+    - home page
+        - sign in
+    - grocery list page
+    - sign up page
+    - passkey support
+    - custom checkboxes
+    - improved delete button w/ icon
+    - list collaboration
