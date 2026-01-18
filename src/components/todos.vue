@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions } from '../constants/category-options';
 import { createGroceryClassifier } from '../libs/index';
+import { groceryMemory } from '../libs/memory';
 
 interface TodoItem {
     checked: boolean;
@@ -15,14 +16,7 @@ const props = defineProps<{ initialTodos: TodoItem[] }>();
 const todos = ref<TodoItem[]>(props.initialTodos);
 const isEditing = ref(true);
 
-const groceryClassifier = createGroceryClassifier();
-groceryClassifier.train('Organic dairy milk', 'Dairy and Eggs')
-groceryClassifier.train('Organic Red Apples', 'Produce')
-groceryClassifier.train('greEn apples', 'Produce')
-groceryClassifier.train('deoderant', 'Personal Care')
-groceryClassifier.train('butter', 'Dairy and Eggs')
-groceryClassifier.train('Cornstarch', 'Baking')
-groceryClassifier.train('Flour', 'Baking')
+const groceryClassifier = createGroceryClassifier(groceryMemory);
 
 const newTodoName = ref('');
 function addTodo() {

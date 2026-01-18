@@ -66,6 +66,7 @@ export function createGroceryClassifier(memory?: ClassifierMemory) {
         // for testing
         get vocabulary() { return vocabulary; },
         get categoryTotals() { return categoryTotals },
-        get wordCounts() { return wordCounts }
+        get wordCounts() { return wordCounts },
+        get totalItemsTrained() { return totalItemsTrained }
     }
 }

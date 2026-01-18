@@ -96,3 +96,36 @@ test('clasification of "giant purple people eater" should be Other', () => {
     const trainedClassifier = mockTraining(classifier);
     expect(trainedClassifier.classify('giant purple people eater')).toEqual('Other')
 })
+
+test('memory', () => {
+    const classifier = createGroceryClassifier();
+    const trainedClassifier = mockTraining(classifier);
+
+    const memory = {
+        wordCounts: trainedClassifier.wordCounts,
+        categoryTotals: trainedClassifier.categoryTotals,
+        vocabulary: trainedClassifier.vocabulary,
+        totalItemsTrained: trainedClassifier.totalItemsTrained
+    };
+
+    const newClassifier = createGroceryClassifier(memory);
+    expect(newClassifier.classify('cosmic apples')).toEqual('Produce');
+})
+
+// test('improved memory efficacy', () => {
+//     const classifier = createGroceryClassifier(groceryMemory);
+
+//     // Test various items that should be correctly classified with pre-trained memory
+//     expect(classifier.classify('almond milk')).toEqual('Dairy and Eggs');
+//     expect(classifier.classify('beef ground')).toEqual('Meat and Seafood');
+//     expect(classifier.classify('chocolate chips')).toEqual('Baking');
+//     expect(classifier.classify('sourdough bread')).toEqual('Bakery');
+//     expect(classifier.classify('frozen vegetables')).toEqual('Frozen');
+//     expect(classifier.classify('potato chips')).toEqual('Snacks');
+//     expect(classifier.classify('orange juice')).toEqual('Beverages');
+//     expect(classifier.classify('dish soap')).toEqual('Cleaning Supplies');
+//     expect(classifier.classify('strawberries')).toEqual('Produce');
+//     expect(classifier.classify('spaghetti pasta')).toEqual('Pantry');
+//     expect(classifier.classify('vanilla ice cream')).toEqual('Frozen');
+//     expect(classifier.classify('greek yogurt')).toEqual('Dairy and Eggs');
+// })
