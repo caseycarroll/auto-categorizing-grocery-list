@@ -10,11 +10,18 @@ export const tokenize = (phrase: string) =>
         .filter(word => word.length > 2) // remove articles
         .map((word: string) => word.toLocaleLowerCase()) // normalize casing
 
-export function createGroceryClassifier() {
-    let wordCounts: WordCounts = {};
-    let categoryTotals: Record<CategoryKey, number> = {};
-    let vocabulary = new Set();
-    let totalItemsTrained = 0;
+type ClassifierMemory = {
+    wordCounts: WordCounts;
+    categoryTotals: Record<CategoryKey, number>;
+    vocabulary: Set<string>;
+    totalItemsTrained: number;
+};
+
+export function createGroceryClassifier(memory?: ClassifierMemory) {
+    let wordCounts: WordCounts = memory?.wordCounts || {};
+    let categoryTotals: Record<CategoryKey, number> = memory?.categoryTotals || {};
+    let vocabulary = memory?.vocabulary || new Set();
+    let totalItemsTrained = memory?.totalItemsTrained || 0;
 
     return {
         train: (phrase: string, category: CategoryUnion) => {
