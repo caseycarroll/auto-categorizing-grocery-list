@@ -61,6 +61,7 @@ export const server = {
       return groceryClassifier.classify(name);
     }
   }),
+  // this naively adds tokens to a classifier's memory without removing any existing tokens
   trainClassifier: defineAction({
     input: z.object({
       name: z.string(),
