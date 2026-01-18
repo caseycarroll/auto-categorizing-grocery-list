@@ -11,4 +11,4 @@
 - subgrid for alignment of item name, category selection, etc...
 ~~- auto select category on add~~
 ~~- store classification memory in DB~~
-- train model on manual category edit
+~~- train model on manual category edit~~
