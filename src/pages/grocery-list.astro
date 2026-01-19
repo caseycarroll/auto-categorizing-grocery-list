@@ -3,9 +3,12 @@ import { db, Todos } from 'astro:db';
 import Layout from '../layouts/Layout.astro';
 import TodosComponent from '../components/todos.vue';
 
+export const prerender = false;
 const todos = await db.select().from(Todos);
 ---
 
-<TodosComponent 
-    client:load
-    initialTodos={todos} />
+<Layout>
+    <TodosComponent 
+        client:load
+        initialTodos={todos} />
+</Layout>

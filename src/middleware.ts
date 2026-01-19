@@ -2,12 +2,15 @@ import { auth } from "./libs/auth"; // import your Better Auth instance
 import { defineMiddleware } from "astro:middleware";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const isAuthed = await auth.api
-    .getSession({
+  const isAuthed = await auth.api.getSession({
       headers: context.request.headers,
     })
+    
   if (context.url.pathname === "/grocery-list" && !isAuthed) {
     return context.redirect("/");
+  }
+  if(context.url.pathname === "/" && isAuthed) {
+    return context.redirect("/grocery-list")
   }
   return next();
 });
