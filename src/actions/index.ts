@@ -3,6 +3,23 @@ import { db, eq, Probabilities, Todos } from 'astro:db';
 import { z } from 'astro/zod';
 import { CategoryEnum, type CategoryUnion } from '../constants/category-options'
 import { createGroceryClassifier, type ClassifierMemory } from '../libs/grocery-classifier';
+import { groceryMemory } from '../libs/memory';
+
+async function ensureProbabilitiesSeeded() {
+  const probabilities = await db.select().from(Probabilities);
+  
+  if (probabilities.length === 0) {
+    // Seed with initial memory
+    await db.insert(Probabilities).values([{
+      id: 1,
+      ...groceryMemory,
+      vocabulary: Array.from(groceryMemory.vocabulary)
+    }]);
+    return (await db.select().from(Probabilities))[0];
+  }
+  
+  return probabilities[0];
+}
 
 export const server = {
   updateTodoChecked: defineAction({
@@ -51,8 +68,7 @@ export const server = {
       name: z.string()
     }),
     handler: async ({ name }: { name: string }) => {
-      const probabilities = await db.select().from(Probabilities);
-      const memory = probabilities[0];
+      const memory = await ensureProbabilitiesSeeded();
       const groceryClassifier = createGroceryClassifier({
         ...memory,
         vocabulary: new Set(memory.vocabulary as unknown as string[])
