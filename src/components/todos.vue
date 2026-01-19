@@ -36,14 +36,19 @@ async function addTodo() {
   newTodoName.value = '';
   
   const { data: session, error: sessionError } = await getSession();
-  if(sessionError) console.log('Error fetching session:', sessionError);
+  if(sessionError || !session) {  
+    console.log('Error getting session:', sessionError);
+    return;
+  };
+  
   const { error: addTodoError } = await actions.addTodo({ 
       id: newTodo.id,
       name: newTodo.name, 
       category: newTodo.category, 
       userId: session.user.id 
     });
-  if(addTodoError) console.log('Error adding todo:', addTodoError);
+  
+    if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
 async function handleDelete(id: number) {
