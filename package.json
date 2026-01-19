@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@iconify-icons/basil": "^1.2.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^4.59.2"
   }
 }
