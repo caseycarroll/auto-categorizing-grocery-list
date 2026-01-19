@@ -1,14 +1,24 @@
 ---
-import { db, Todos } from 'astro:db';
+import { db, Todos, eq } from 'astro:db';
 import Layout from '../layouts/Layout.astro';
 import TodosComponent from '../components/todos.vue';
+import { auth } from '../libs/auth';
 
 export const prerender = false;
-const todos = await db.select().from(Todos);
+const session = await auth.api.getSession({
+  headers: Astro.request.headers,
+});
+let todos;
+if(session) {
+    todos = await db.select().from(Todos).where(eq(Todos.userId, session.user.id));
+}
+
 ---
 
 <Layout>
-    <TodosComponent 
-        client:load
-        initialTodos={todos} />
+    { todos && 
+        <TodosComponent 
+            client:load
+            initialTodos={todos} />
+    }
 </Layout>

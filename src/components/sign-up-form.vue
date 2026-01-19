@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { signUp } from '../libs/auth-client';
 
-const name = defineModel<string>('name', {required: true});
-const email = defineModel<string>('email', {required: true});
-const password = defineModel<string>('password', {required: true});
+const name = defineModel<string>('name', {default: ''});
+const email = defineModel<string>('email', {default: ''});
+const password = defineModel<string>('password', {default: ''});
 
 
 async function onSubmit() {
-    if(!name || !email || !password) return;
+    if(!name.value || !email.value || !password.value) return;
     const {data, error} = await signUp.email({
         name: name.value,
         email: email.value,
         password: password.value,
     })
-    if(error) console.log('error', error)
+    if(error) {
+        console.log('error', error)
+        return;
+    }
     window.location.href = '/grocery-list'
 }
 </script>

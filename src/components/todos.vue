@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 import { actions } from 'astro:actions';
+import { useSession } from '../libs/auth-client';
 
 interface TodoItem {
     checked: boolean;
@@ -21,6 +22,7 @@ async function addTodo() {
   if (!newTodoName.value.trim()) {
     return;
   }
+
   const { data: classification, error:classificationError } = await actions.classifyItem({ name: newTodoName.value });
   if(classificationError) console.log('Error classifying item:', classificationError);
 
@@ -33,7 +35,8 @@ async function addTodo() {
   todos.value.push(newTodo);
   newTodoName.value = '';
   
-  const { error: addTodoError } = await actions.addTodo({ id: newTodo.id, name: newTodo.name, category: newTodo.category });
+  const { data: session } = await useSession()
+  const { error: addTodoError } = await actions.addTodo({ id: newTodo.id, name: newTodo.name, category: newTodo.category, userId: session.user.id });
   if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
@@ -119,4 +122,5 @@ async function handleCheckChanged(id: number, checked: boolean) {
       </div>
     </div>
   </div>
-</template>
+</template>import type { useSession } from '../libs/auth-client';import type { useSession } from '../libs/auth-client';
+

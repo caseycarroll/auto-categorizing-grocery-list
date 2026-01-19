@@ -2,8 +2,9 @@
     - ~~home page~~
         - ~~sign in~~
     - ~~grocery list page~~
-    - sign up page
-    - passkey support
+    - ~~sign up page~~
+    - query grocery items per user
     - custom checkboxes
     - improved delete button w/ icon
     - list collaboration
+    - experiment with biome

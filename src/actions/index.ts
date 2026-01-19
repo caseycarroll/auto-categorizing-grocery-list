@@ -52,6 +52,7 @@ export const server = {
     handler: async ({ name }: { name: string }) => {
       const probabilities = await db.select().from(Probabilities).limit(1);
       const memory = probabilities[0];
+      console.log(probabilities)
       const groceryClassifier = createGroceryClassifier({
         ...memory,
         vocabulary: new Set(memory.vocabulary as unknown as string[])

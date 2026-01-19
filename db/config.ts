@@ -4,7 +4,8 @@ const Todos = defineTable({
   columns: {
     checked: column.boolean(),
     name: column.text(),
-    id: column.number(),
+    id: column.number({ primaryKey: true }),
+    userId: column.text({ references: () => User.columns.id }),
     category: column.text({
       enum: categoryOptions as unknown as [string, ...string[]]
     })
