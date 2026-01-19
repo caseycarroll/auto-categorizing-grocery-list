@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, shallowRef } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 import { actions } from 'astro:actions';
+import { createGroceryClassifier, type ClassifierMemory } from '../libs/grocery-classifier';
 
 interface TodoItem {
     checked: boolean;
@@ -11,10 +12,10 @@ interface TodoItem {
     category: CategoryUnion;
 }
 
-const props = defineProps<{ initialTodos: TodoItem[] }>();
+const props = defineProps<{ initialTodos: TodoItem[], initialClassifierMemory: ClassifierMemory }>();
+const classifierMemory = shallowRef<ClassifierMemory>(props.initialClassifierMemory);
 const todos = ref<TodoItem[]>(props.initialTodos);
 const isEditing = ref(true);
-
 const newTodoName = ref('');
 
 async function addTodo() {
@@ -22,14 +23,14 @@ async function addTodo() {
     return;
   }
 
-  const { data: classification, error:classificationError } = await actions.classifyItem({ name: newTodoName.value });
-  if(classificationError) console.log('Error classifying item:', classificationError);
-
+  const groceryClassifier = createGroceryClassifier(classifierMemory.value);
+  const classification = groceryClassifier.classify(newTodoName.value.trim());
+  
   const newTodo: TodoItem = {
     id: Date.now(),
     name: newTodoName.value.trim(),
     checked: false,
-    category: classification || 'Other'
+    category: classification
   };
   todos.value.push(newTodo);
   newTodoName.value = '';
@@ -39,7 +40,6 @@ async function addTodo() {
       name: newTodo.name, 
       category: newTodo.category
     });
-  
     if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
@@ -57,8 +57,12 @@ async function handleCategoryChanged(id: number, category: CategoryUnion) {
   todo.category = category;
   const { error } = await actions.updateTodoCategory({ id, category });
   if(error) console.log('Error updating todo category:', error);
-  const { error: trainError } = await actions.trainClassifier({ name: todo.name, category });
-  if(trainError) console.log('Error training classifier:', trainError);
+  const { data, error: trainError } = await actions.trainClassifier({ name: todo.name, category });
+  if(trainError) { 
+    console.log('Error training classifier:', trainError);
+    return;
+  }
+  classifierMemory.value = data[0] as ClassifierMemory;
 }
 
 async function handleCheckChanged(id: number, checked: boolean) {

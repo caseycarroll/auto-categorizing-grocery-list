@@ -91,13 +91,12 @@ export const server = {
         vocabulary: new Set(memory.vocabulary as unknown as string[])
       } as ClassifierMemory);
       groceryClassifier.train(name, category);
-      await db.update(Probabilities).set({
+      return await db.update(Probabilities).set({
         wordCounts: groceryClassifier.wordCounts,
         categoryTotals: groceryClassifier.categoryTotals,
         vocabulary: Array.from(groceryClassifier.vocabulary),
         totalItemsTrained: groceryClassifier.totalItemsTrained
-      }).where(eq(Probabilities.id, memory.id));
-      console.log('Trained classifier with item:', name, 'Category:', category);
+      }).where(eq(Probabilities.id, memory.id)).returning();
     }
   })
 }
