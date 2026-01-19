@@ -46,11 +46,10 @@ export const server = {
     input: z.object({
       id: z.number(),
       name: z.string(),
-      category: CategoryEnum,
-      userId: z.string()
+      category: CategoryEnum
     }),
-    handler: async ({ id, name, category, userId }: { id: number; name: string; category: CategoryUnion; userId: string }) => {
-      await db.insert(Todos).values({ id, name, checked: false, category, userId });
+    handler: async ({ id, name, category }: { id: number; name: string; category: CategoryUnion; }) => {
+      await db.insert(Todos).values({ id, name, checked: false, category });
       console.log(`Todo with ID ${id}, name ${name}, and category ${category} was added`);
     }
   }), 

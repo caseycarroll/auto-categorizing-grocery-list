@@ -1,10 +1,16 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import SignInForm from "../components/sign-in-form.vue";
+import { db, Todos } from 'astro:db';
+import Layout from '../layouts/Layout.astro';
+import TodosComponent from '../components/todos.vue';
 
-export const prerender = false
+const todos = await db.select().from(Todos);
+
 ---
 
 <Layout>
-	<SignInForm client:idle />
+    { todos && 
+        <TodosComponent 
+            client:load
+            initialTodos={todos} />
+    }
 </Layout>
