@@ -5,7 +5,10 @@ import vue from '@astrojs/vue';
 
 import db from '@astrojs/db';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [vue(), db()]
+  integrations: [vue(), db()],
+  adapter: cloudflare()
 });

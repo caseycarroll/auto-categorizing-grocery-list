@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/db": "^0.18.3",
     "@astrojs/vue": "^5.1.4",
     "@iconify/vue": "^5.0.0",
