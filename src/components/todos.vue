@@ -128,5 +128,4 @@ async function handleCheckChanged(id: number, checked: boolean) {
       </div>
     </div>
   </div>
-</template>import type { useSession } from '../libs/auth-client';import type { useSession } from '../libs/auth-client';
-getSession, 
+</template>
