@@ -13,6 +13,7 @@
     "@astrojs/db": "^0.18.3",
     "@astrojs/vue": "^5.1.4",
     "astro": "^5.16.8",
+    "astro-icon": "^1.1.5",
     "better-auth": "^1.4.15",
     "vue": "^3.5.26"
   },
