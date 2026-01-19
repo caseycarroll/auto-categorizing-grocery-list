@@ -31,8 +31,10 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
 
 <style scoped>
 .todo-item {
+    --gutter: var(--space-2xs);
     --space: var(--space-m);
-    padding-inline: var(--space-m);
+    
+    padding-inline: var(--space-s);
 
     border: 1px dashed var(--color-primary-foreground);
     border-radius: var(--radius-lg);
@@ -46,6 +48,13 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
 
     input[type="checkbox"] {
         transform: translateY(0.2ex);
+    }
+
+    select {
+        max-width: 15ch;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .text-strikethrough {
