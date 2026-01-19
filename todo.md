@@ -5,5 +5,5 @@
     - ~~sign up page~~
     - ~~query grocery items per user~~
     - custom checkboxes
-    - ~~improved delete button w/ icon~~
+    - improved delete button w/ icon
     - list collaboration
