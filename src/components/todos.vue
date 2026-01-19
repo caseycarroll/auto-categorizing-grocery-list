@@ -86,6 +86,15 @@ async function handleCheckChanged(id: number, checked: boolean) {
       </button>
     </header>
     <div class="flow">
+      <form @submit.prevent="addTodo">
+        <label for="new-todo">New item</label>
+        <div class="cluster">
+          <input id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
+          <button type="submit">
+            <span>Add item</span>
+          </button>
+        </div>
+      </form>
       <div v-if="isEditing">
         <ul role="list" class="flow todo-list">
           <Todo 
@@ -120,17 +129,6 @@ async function handleCheckChanged(id: number, checked: boolean) {
       </div>
     </div>
   </div>
-  <div class="wrapper card add-item fill">
-      <form @submit.prevent="addTodo">
-        <label for="new-todo">New item</label>
-        <div class="cluster">
-          <input id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
-          <button type="submit">
-            <span>Add item</span>
-          </button>
-        </div>
-      </form>
-    </div>
 </template>
 
 <style scoped>
@@ -140,13 +138,5 @@ async function handleCheckChanged(id: number, checked: boolean) {
 
   .wrapper {
     padding-block-end: var(--space-2xl);
-  }
-
-  .add-item {
-    width: calc(100% - calc(var(--space-s)*2));
-    box-sizing: border-box;
-    position: fixed;
-    margin-inline: var(--space-s);
-    bottom: var(--space-m);
   }
 </style>

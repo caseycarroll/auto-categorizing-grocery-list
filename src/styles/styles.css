@@ -24,7 +24,6 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont;
     background-color: #f9f9f9;
     color: var(--color-primary-foreground);
-    box-sizing: border-box;
 }
 
 main {
