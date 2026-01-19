@@ -134,4 +134,8 @@ async function handleCheckChanged(id: number, checked: boolean) {
   ul > li {
     --flow-space: var(--space-s);
   }
+
+  .wrapper {
+    padding-block-end: var(--space-2xl);
+  }
 </style>
