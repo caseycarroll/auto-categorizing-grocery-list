@@ -12,11 +12,13 @@
   "dependencies": {
     "@astrojs/db": "^0.18.3",
     "@astrojs/vue": "^5.1.4",
+    "@iconify/vue": "^5.0.0",
     "astro": "^5.16.8",
     "better-auth": "^1.4.15",
     "vue": "^3.5.26"
   },
   "devDependencies": {
+    "@iconify-icons/basil": "^1.2.0",
     "vitest": "^3.2.4"
   }
 }

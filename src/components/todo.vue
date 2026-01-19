@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { categoryOptions, type CategoryUnion } from '../constants/category-options';
+import { Icon } from '@iconify/vue';
 
 interface Props {
     name: string;
@@ -25,7 +26,9 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
                 {{ category }}
             </option>
         </select>
-        <button v-if="isEditable" @click="$emit('delete', id)" title="delete item" class="delete-btn">❌</button>
+        <button v-if="isEditable" @click="$emit('delete', id)" title="delete item" class="delete-btn">
+            <Icon icon="basil:trash-alt-solid" />
+        </button>
     </li>
 </template>
 
@@ -68,7 +71,13 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.25rem;
-    padding: 0.25rem;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    border: 1px solid hsl(0, 32%, 69%);
+    margin-inline-start: var(--space-xs);
+    & > svg {
+        color: hsl(0, 55%, 43%);
+        transform: translateY(2px);
+    }
 }
 </style>
