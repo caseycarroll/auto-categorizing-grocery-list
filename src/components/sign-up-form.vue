@@ -36,9 +36,7 @@ async function onSubmit() {
                 <label for="pass">Password</label>
                 <input v-model="password" id="pass" type="password" required />
             </div>
-            <div class="repel submit-btn">
-                <button id="sign-in" type="submit"><span>Sign up</span></button>
-            </div>
+            <button id="sign-in" type="submit"><span>Sign up</span></button>
         </form>
     </div>
 </template>
@@ -46,5 +44,12 @@ async function onSubmit() {
 <style>
     form > * + * {
         margin-top: var(--flow-space, 1rem);
+    }
+
+    form {
+        --flow-space: var(--space-s);
+    }
+    form button {
+        --flow-space: var(--space-m);
     }
 </style>
