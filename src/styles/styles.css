@@ -115,3 +115,10 @@ button.secondary {
     border: 2px solid hsl(0deg 0% 81.79%)
     
 }
+
+:is(h1,
+h2,
+h3,
+h4) + * {
+    --flow-space: var(--space-xs);
+}

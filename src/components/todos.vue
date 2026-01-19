@@ -78,7 +78,7 @@ async function handleCheckChanged(id: number, checked: boolean) {
 
 <template>
   <div class="flow wrapper">
-    <header class="cluster--space-between">
+    <header class="repel">
       <h1>Groceries</h1>
       <button @click="isEditing = !isEditing">
         <span>Toggle View</span>
@@ -129,3 +129,9 @@ async function handleCheckChanged(id: number, checked: boolean) {
     </div>
   </div>
 </template>
+
+<style scoped>
+  ul > li {
+    --flow-space: var(--space-s);
+  }
+</style>
