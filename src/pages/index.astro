@@ -6,6 +6,8 @@ import { Probabilities } from 'astro:db';
 import type { ClassifierMemory } from '../libs/grocery-classifier';
 import { groceryMemory } from '../libs/memory';
 
+export const prerender = false;
+
 const todos = await db.select().from(Todos);
 const probabilityObj = await db.select().from(Probabilities);
 const memory = probabilityObj?.[0] || groceryMemory as ClassifierMemory;
