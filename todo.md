@@ -1,7 +1,7 @@
 - Authentication
-    - home page
-        - sign in
-    - grocery list page
+    - ~~home page~~
+        - ~~sign in~~
+    - ~~grocery list page~~
     - sign up page
     - passkey support
     - custom checkboxes

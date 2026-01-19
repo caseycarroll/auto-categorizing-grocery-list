@@ -19,10 +19,8 @@ async function onSubmit() {
 </script>
 
 <template>
-    <div class="flow wrapper">
-        <header>
-            <h1>Sign up</h1>
-        </header>
+    <div class="flow wrapper card">
+        <h1>Sign up</h1>
         <form @submit.prevent="onSubmit">
             <div>
                 <label for="name">Name</label>
