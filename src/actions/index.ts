@@ -29,10 +29,11 @@ export const server = {
     input: z.object({
       id: z.number(),
       name: z.string(),
-      category: CategoryEnum
+      category: CategoryEnum,
+      userId: z.string()
     }),
-    handler: async ({ id, name, category }: { id: number; name: string; category: CategoryUnion }) => {
-      await db.insert(Todos).values({ id, name, checked: false, category });
+    handler: async ({ id, name, category, userId }: { id: number; name: string; category: CategoryUnion; userId: string }) => {
+      await db.insert(Todos).values({ id, name, checked: false, category, userId });
       console.log(`Todo with ID ${id}, name ${name}, and category ${category} was added`);
     }
   }), 
@@ -50,15 +51,14 @@ export const server = {
       name: z.string()
     }),
     handler: async ({ name }: { name: string }) => {
-      const probabilities = await db.select().from(Probabilities).limit(1);
+      const probabilities = await db.select().from(Probabilities);
       const memory = probabilities[0];
-      console.log(probabilities)
       const groceryClassifier = createGroceryClassifier({
         ...memory,
         vocabulary: new Set(memory.vocabulary as unknown as string[])
       } as ClassifierMemory);
       console.log('Classifying item:', name);
-      console.log('ailse', groceryClassifier.classify(name))
+      console.log('aisle', groceryClassifier.classify(name))
       return groceryClassifier.classify(name);
     }
   }),

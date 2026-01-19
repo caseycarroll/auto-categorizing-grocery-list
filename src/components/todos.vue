@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 import { actions } from 'astro:actions';
-import { useSession } from '../libs/auth-client';
+import { getSession } from '../libs/auth-client';
 
 interface TodoItem {
     checked: boolean;
@@ -35,8 +35,14 @@ async function addTodo() {
   todos.value.push(newTodo);
   newTodoName.value = '';
   
-  const { data: session } = await useSession()
-  const { error: addTodoError } = await actions.addTodo({ id: newTodo.id, name: newTodo.name, category: newTodo.category, userId: session.user.id });
+  const { data: session, error: sessionError } = await getSession();
+  if(sessionError) console.log('Error fetching session:', sessionError);
+  const { error: addTodoError } = await actions.addTodo({ 
+      id: newTodo.id,
+      name: newTodo.name, 
+      category: newTodo.category, 
+      userId: session.user.id 
+    });
   if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
@@ -123,4 +129,4 @@ async function handleCheckChanged(id: number, checked: boolean) {
     </div>
   </div>
 </template>import type { useSession } from '../libs/auth-client';import type { useSession } from '../libs/auth-client';
-
+getSession, 

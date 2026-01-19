@@ -3,7 +3,6 @@ import { groceryMemory } from '../src/libs/memory';
 
 // https://astro.build/db/seed
 export default async function seed() {
-	await db.insert(Todos).values([])
 	await db.insert(Probabilities).values([
 		{
 			id: 1,
