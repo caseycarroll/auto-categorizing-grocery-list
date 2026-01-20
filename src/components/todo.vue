@@ -75,10 +75,9 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: 3px solid hsl(0, 38%, 54%);
     background-color: hsl(0, 89%, 96%);
-    margin-inline-start: var(--space-xs);
     border-radius: var(--radius-m);
     & > svg {
         color: hsl(0, 55%, 43%);
