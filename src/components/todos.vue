@@ -167,11 +167,11 @@ async function onClearCompleted() {
     --flow-space: var(--space-s);
   }
 
-  .wrapper {
-    padding-block-end: var(--space-2xl);
-  }
-
   .item-name-input {
     flex-grow: 1;
+  }
+
+  .todo-list li:last-child {
+    margin-block-end: var(--space-xl); 
   }
 </style>
