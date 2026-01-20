@@ -18,9 +18,9 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
 </script>
 
 <template>
-    <li class="cluster todo-item">
+    <li class="cluster todo-item" :class="isEditable && 'edit'">
         <input type="checkbox" :id="name" v-model="checked" />
-        <label :for="name" :class="checked && 'text-strikethrough'">{{ name }}</label>
+        <label class="text-overflow-ellipsis" :for="name" :class="checked && 'text-strikethrough'">{{ name }}</label>
         <select v-if="isEditable" v-model="selectedCategory" :id="selectedCategory + '-' + id" title="Item category">
             <option v-for="category in categoryOptions" :key="category" :value="category">
                 {{ category }}
@@ -34,12 +34,13 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
 
 <style scoped>
 .todo-item {
+    flex-wrap: nowrap;
     --gutter: var(--space-2xs);
     --space: var(--space-m);
     
     padding-inline: var(--space-s);
 
-    border: 1px dashed var(--color-primary-foreground);
+    border: 1px solid hsl(0, 0%, 70%);
     border-radius: var(--radius-lg);
 
     background-color: #ffffff;
@@ -47,10 +48,6 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
     label {
         flex-grow: 1;
         padding-block: var(--space-m);
-    }
-
-    input[type="checkbox"] {
-        transform: translateY(0.2ex);
     }
 
     select {
@@ -67,14 +64,20 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
     }
 }
 
+.todo-item.edit {
+    border: 1px dashed var(--color-secondary-foreground);
+}
+
 .delete-btn {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
     padding: 0.5rem;
-    border: 1px solid hsl(0, 32%, 69%);
+    border: 3px solid hsl(0, 38%, 54%);
+    background-color: hsl(0, 89%, 96%);
     margin-inline-start: var(--space-xs);
+    border-radius: var(--radius-m);
     & > svg {
         color: hsl(0, 55%, 43%);
         transform: translateY(2px);

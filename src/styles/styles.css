@@ -85,7 +85,7 @@ button {
         background-color: hsl(187, 63%, 87%);
         border-radius: var(--radius-m);
         transform: translateY(-3px);
-        padding: var(--space-xs) var(--space-s);
+        padding: var(--space-2xs) var(--space-xs);
         transition:
             transform 400ms cubic-bezier(.3, .7, .4, 1);
     }
@@ -121,4 +121,10 @@ h2,
 h3,
 h4) + * {
     --flow-space: var(--space-xs);
+}
+
+.text-overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

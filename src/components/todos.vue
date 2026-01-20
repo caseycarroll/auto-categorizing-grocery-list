@@ -4,6 +4,7 @@ import Todo from './todo.vue';
 import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 import { actions } from 'astro:actions';
 import { createGroceryClassifier, type ClassifierMemory } from '../libs/grocery-classifier';
+import { Icon } from '@iconify/vue';
 
 interface TodoItem {
     checked: boolean;
@@ -89,12 +90,13 @@ async function handleCheckChanged(id: number, checked: boolean) {
       <form @submit.prevent="addTodo">
         <label for="new-todo">New item</label>
         <div class="cluster">
-          <input id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
+          <input class="item-name-input" id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
           <button type="submit">
-            <span>Add item</span>
+            <span class="cluster" style="--gutter: var(--space-2xs);"><Icon icon="basil:plus-solid" style="font-size: 1.5em;" />Add</span>
           </button>
         </div>
       </form>
+      <hr />
       <div v-if="isEditing">
         <ul role="list" class="flow todo-list">
           <Todo 
@@ -138,5 +140,9 @@ async function handleCheckChanged(id: number, checked: boolean) {
 
   .wrapper {
     padding-block-end: var(--space-2xl);
+  }
+
+  .item-name-input {
+    flex-grow: 1;
   }
 </style>
