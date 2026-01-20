@@ -1,95 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Todo from './todo.vue';
-import { categoryOptions, type CategoryUnion } from '../constants/category-options';
-import { actions } from 'astro:actions';
+import CategorizedList from './CategorizedList.vue';
+import AddItem from './addItem.vue';
+import { type CategoryUnion } from '../constants/category-options';
+import { useTodos, type TodoItem } from '../composables/useTodos';
 import { Icon } from '@iconify/vue';
 
-interface TodoItem {
-    checked: boolean;
-    name: string;
-    id: number;
-    category: CategoryUnion;
-    isClassifying?: boolean;
-}
-
 const props = defineProps<{ initialTodos: TodoItem[] }>();
-const todos = ref<TodoItem[]>(props.initialTodos);
+const {
+  todos,
+  addTodo,
+  handleDelete,
+  handleCategoryChanged,
+  handleCheckChanged,
+  onClearCompleted
+} = useTodos(props.initialTodos);
+
 const isEditing = ref(true);
-const newTodoName = ref('');
-
-async function addTodo() {
-  if (!newTodoName.value.trim()) {
-    return;
-  }
-
-  const newTodo: TodoItem = {
-    id: Date.now(),
-    name: newTodoName.value.trim(),
-    checked: false,
-    category: 'Other',
-    isClassifying: true
-  };
-  todos.value.push(newTodo);
-  const todoId = newTodo.id;
-  newTodoName.value = '';
-  
-  // Get classification from server
-  const { data: classification, error: classifyError } = await actions.classifyItem({ name: newTodo.name });
-  
-  // Find the todo in the reactive array to update it
-  const todoInArray = todos.value.find(t => t.id === todoId);
-  if (todoInArray) {
-    if (!classifyError && classification) {
-      todoInArray.category = classification;
-    }
-    todoInArray.isClassifying = false;
-  }
-  
-  const { error: addTodoError } = await actions.addTodo({ 
-      id: newTodo.id,
-      name: newTodo.name, 
-      category: todoInArray?.category ?? newTodo.category
-    });
-  if(addTodoError) console.log('Error adding todo:', addTodoError);
-}
-
-async function handleDelete(id: number) {
-  todos.value = todos.value.filter(todo => todo.id !== id);
-  const { error } = await actions.deleteTodo({ id });
-  if(error) console.log('Error deleting todo:', error);
-}
-
-async function handleCategoryChanged(id: number, category: CategoryUnion) {
-  const todo = todos.value.find(todo => todo.id === id);
-  if (!todo) {
-    return;
-  }
-  todo.category = category;
-  const { error } = await actions.updateTodoCategory({ id, category });
-  if(error) console.log('Error updating todo category:', error);
-  const { error: trainError } = await actions.trainClassifier({ name: todo.name, category });
-  if(trainError) { 
-    console.log('Error training classifier:', trainError);
-  }
-}
-
-async function handleCheckChanged(id: number, checked: boolean) {
-  const todo = todos.value.find(todo => todo.id === id);
-  if (!todo) {
-    return;
-  }
-  todo.checked = checked;
-  const { error } = await actions.updateTodoChecked({ id, checked });
-  if(error) console.log('Error updating todo checked status:', error);
-}
-
-async function onClearCompleted() {
-  const completedTodoIds = todos.value.filter(todo => todo.checked).map(todo => todo.id);
-  todos.value = todos.value.filter(todo => !todo.checked);
-  const { error } = await actions.clearCompletedTodos({ ids: completedTodoIds });
-  if(error) console.log('Error clearing completed todos:', error);
-}
 
 </script>
 
@@ -102,18 +30,7 @@ async function onClearCompleted() {
       </button>
     </header>
     <div class="flow">
-      <form @submit.prevent="addTodo">
-        <label for="new-todo">New item</label>
-        <div class="cluster">
-          <input class="item-name-input" id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
-          <button type="submit">
-            <span class="cluster" style="--gutter: var(--space-2xs);">
-              <Icon icon="basil:plus-solid" style="font-size: 1.5em;" />
-              Add
-            </span>
-          </button>
-        </div>
-      </form>
+      <AddItem @add="addTodo" />
       <hr />
       <div v-if="isEditing" class="flow">
         <div class="repel">
@@ -139,25 +56,11 @@ async function onClearCompleted() {
             @delete="(id: number) => handleDelete(id)" />
         </ul>
       </div>
-      <div v-else class="flow">
-        <div v-for="category in categoryOptions" class="flow">
-          <h2>{{ category }}</h2>
-          <ul role="list" class="flow todo-list">
-            <Todo 
-              v-for="todo in todos.filter(todo => todo.category === category)" 
-              :key="todo.id"
-              :id="todo.id"
-              :name="todo.name"
-              :is-classifying="todo.isClassifying"
-              v-model:checked="todo.checked"
-              @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
-              v-model:selectedCategory="todo.category"
-              @update:selectedCategory="(category: CategoryUnion) => handleCategoryChanged(todo.id, category)"
-              @delete="(id: number) => handleDelete(id)"
-              :is-editable="false" />
-          </ul>
-        </div>
-      </div>
+      <CategorizedList 
+        v-else 
+        :todos="todos"
+        @update:checked="handleCheckChanged"
+        @update:selected-category="handleCategoryChanged" />
     </div>
   </div>
 </template>
@@ -165,10 +68,6 @@ async function onClearCompleted() {
 <style scoped>
   ul > li {
     --flow-space: var(--space-s);
-  }
-
-  .item-name-input {
-    flex-grow: 1;
   }
 
   .todo-list li:last-child {
