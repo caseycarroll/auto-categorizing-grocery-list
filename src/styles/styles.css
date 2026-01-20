@@ -27,7 +27,7 @@ body {
     min-height: 100vh;
 }
 
-:is(input, select, textarea) {
+:is(input, select, textarea, label) {
   accent-color: var(--color-primary);
   -webkit-tap-highlight-color: transparent;
 }
