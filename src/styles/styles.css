@@ -32,6 +32,7 @@ main {
 
 :is(input, select, textarea) {
   accent-color: var(--color-primary);
+  -webkit-tap-highlight-color: transparent;
 }
 
 label {
@@ -102,9 +103,23 @@ button {
 }
 
 button.secondary {
-    background-color: hsl(52, 32%, 86%);
+    font-size: 0.8rem;
+    color: var(--color-secondary-foreground);
+    background-color: hsl(0, 0%, 85%);
     & > span {
-        background-color: hsl(51, 100%, 89%);
+        padding: 0.4em 0.6em;
+        background-color: hsl(0, 0%, 100%);
+        border: 1px solid hsl(0deg 0% 81.79%);
+        transform: translateY(-2px);
+    }
+    &:hover > span {
+        transform: translateY(-3px);
+        transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+    }
+
+    &:active>span {
+        transform: translateY(-1px);
+        transition: transform 35ms;
     }
 }
 

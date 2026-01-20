@@ -76,6 +76,13 @@ async function handleCheckChanged(id: number, checked: boolean) {
   if(error) console.log('Error updating todo checked status:', error);
 }
 
+async function onClearCompleted() {
+  const completedTodoIds = todos.value.filter(todo => todo.checked).map(todo => todo.id);
+  todos.value = todos.value.filter(todo => !todo.checked);
+  const { error } = await actions.clearCompletedTodos({ ids: completedTodoIds });
+  if(error) console.log('Error clearing completed todos:', error);
+}
+
 </script>
 
 <template>
@@ -92,12 +99,24 @@ async function handleCheckChanged(id: number, checked: boolean) {
         <div class="cluster">
           <input class="item-name-input" id="new-todo" type="text" v-model="newTodoName" autocomplete="off">
           <button type="submit">
-            <span class="cluster" style="--gutter: var(--space-2xs);"><Icon icon="basil:plus-solid" style="font-size: 1.5em;" />Add</span>
+            <span class="cluster" style="--gutter: var(--space-2xs);">
+              <Icon icon="basil:plus-solid" style="font-size: 1.5em;" />
+              Add
+            </span>
           </button>
         </div>
       </form>
       <hr />
-      <div v-if="isEditing">
+      <div v-if="isEditing" class="flow">
+        <div class="repel">
+          <div></div>
+          <button class="secondary" @click="onClearCompleted">
+            <span class="cluster" style="--gutter: var(--space-2xs);">
+              <Icon style="font-size: 1.5em;" icon="basil:backspace-solid"></Icon>
+              Clear completed
+            </span>
+          </button>
+        </div>
         <ul role="list" class="flow todo-list">
           <Todo 
             v-for="todo in todos" 

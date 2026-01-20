@@ -1,5 +1,5 @@
 import { defineAction } from 'astro:actions';
-import { db, eq, Probabilities, Todos } from 'astro:db';
+import { db, eq, inArray, Probabilities, Todos } from 'astro:db';
 import { z } from 'astro/zod';
 import { CategoryEnum, type CategoryUnion } from '../constants/category-options'
 import { createGroceryClassifier, type ClassifierMemory } from '../libs/grocery-classifier';
@@ -97,6 +97,15 @@ export const server = {
         vocabulary: Array.from(groceryClassifier.vocabulary),
         totalItemsTrained: groceryClassifier.totalItemsTrained
       }).where(eq(Probabilities.id, memory.id)).returning();
+    }
+  }),
+  clearCompletedTodos: defineAction({
+    input: z.object({
+      ids: z.array(z.number())
+    }),
+    handler: async ({ ids }: { ids: number[] }) => {
+      await db.delete(Todos).where(inArray(Todos.id, ids));
+      console.log(`Cleared completed todos with IDs: ${ids.join(', ')}`);
     }
   })
 }

@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@iconify-icons/basil": "^1.2.0",
+    "rollup-plugin-visualizer": "^6.0.5",
     "vitest": "^3.2.4"
   }
 }
