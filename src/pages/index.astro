@@ -2,25 +2,16 @@
 import { db, Todos } from 'astro:db';
 import Layout from '../layouts/Layout.astro';
 import TodosComponent from '../components/todos.vue';
-import { Probabilities } from 'astro:db';
-import type { ClassifierMemory } from '../libs/grocery-classifier';
-import { groceryMemory } from '../libs/memory';
 
 export const prerender = false;
 
 const todos = await db.select().from(Todos);
-const probabilityObj = await db.select().from(Probabilities);
-const memory = probabilityObj?.[0] || groceryMemory as ClassifierMemory;
 ---
 
 <Layout>
     { todos && 
         <TodosComponent 
             client:load
-            initialTodos={todos}
-            initialClassifierMemory={{
-                ...memory,
-                vocabulary: new Set(memory.vocabulary as unknown as string[])
-            }} />
+            initialTodos={todos} />
     }
 </Layout>

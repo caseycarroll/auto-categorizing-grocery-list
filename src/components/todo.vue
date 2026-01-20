@@ -6,9 +6,10 @@ interface Props {
     name: string;
     id: number;
     isEditable?: boolean;
+    isClassifying?: boolean;
 }
 
-const { name, id, isEditable = true } = defineProps<Props>();
+const { name, id, isEditable = true, isClassifying = false } = defineProps<Props>();
 const emit = defineEmits<{
     (e: 'delete', id: number): void;
 }>();
@@ -21,7 +22,8 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
     <li class="cluster todo-item" :class="isEditable && 'edit'">
         <input type="checkbox" :id="name" v-model="checked" />
         <label class="text-overflow-ellipsis" :for="name" :class="checked && 'text-strikethrough'">{{ name }}</label>
-        <select v-if="isEditable" v-model="selectedCategory" :id="selectedCategory + '-' + id" title="Item category">
+        <span v-if="isClassifying" class="classifying-placeholder">...</span>
+        <select v-else-if="isEditable" v-model="selectedCategory" :id="selectedCategory + '-' + id" title="Item category">
             <option v-for="category in categoryOptions" :key="category" :value="category">
                 {{ category }}
             </option>
@@ -82,5 +84,11 @@ const selectedCategory = defineModel<CategoryUnion>('selectedCategory', { defaul
         color: hsl(0, 55%, 43%);
         transform: translateY(2px);
     }
+}
+
+.classifying-placeholder {
+    color: var(--color-secondary-foreground);
+    min-width: 10ch;
+    text-align: center;
 }
 </style>

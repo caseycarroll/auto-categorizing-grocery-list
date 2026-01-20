@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, shallowRef } from 'vue';
+import { ref } from 'vue';
 import Todo from './todo.vue';
 import { categoryOptions, type CategoryUnion } from '../constants/category-options';
 import { actions } from 'astro:actions';
-import { createGroceryClassifier, type ClassifierMemory } from '../libs/grocery-classifier';
 import { Icon } from '@iconify/vue';
 
 interface TodoItem {
@@ -11,10 +10,10 @@ interface TodoItem {
     name: string;
     id: number;
     category: CategoryUnion;
+    isClassifying?: boolean;
 }
 
-const props = defineProps<{ initialTodos: TodoItem[], initialClassifierMemory: ClassifierMemory }>();
-const classifierMemory = shallowRef<ClassifierMemory>(props.initialClassifierMemory);
+const props = defineProps<{ initialTodos: TodoItem[] }>();
 const todos = ref<TodoItem[]>(props.initialTodos);
 const isEditing = ref(true);
 const newTodoName = ref('');
@@ -24,24 +23,35 @@ async function addTodo() {
     return;
   }
 
-  const groceryClassifier = createGroceryClassifier(classifierMemory.value);
-  const classification = groceryClassifier.classify(newTodoName.value.trim());
-  
   const newTodo: TodoItem = {
     id: Date.now(),
     name: newTodoName.value.trim(),
     checked: false,
-    category: classification
+    category: 'Other',
+    isClassifying: true
   };
   todos.value.push(newTodo);
+  const todoId = newTodo.id;
   newTodoName.value = '';
+  
+  // Get classification from server
+  const { data: classification, error: classifyError } = await actions.classifyItem({ name: newTodo.name });
+  
+  // Find the todo in the reactive array to update it
+  const todoInArray = todos.value.find(t => t.id === todoId);
+  if (todoInArray) {
+    if (!classifyError && classification) {
+      todoInArray.category = classification;
+    }
+    todoInArray.isClassifying = false;
+  }
   
   const { error: addTodoError } = await actions.addTodo({ 
       id: newTodo.id,
       name: newTodo.name, 
-      category: newTodo.category
+      category: todoInArray?.category ?? newTodo.category
     });
-    if(addTodoError) console.log('Error adding todo:', addTodoError);
+  if(addTodoError) console.log('Error adding todo:', addTodoError);
 }
 
 async function handleDelete(id: number) {
@@ -58,12 +68,10 @@ async function handleCategoryChanged(id: number, category: CategoryUnion) {
   todo.category = category;
   const { error } = await actions.updateTodoCategory({ id, category });
   if(error) console.log('Error updating todo category:', error);
-  const { data, error: trainError } = await actions.trainClassifier({ name: todo.name, category });
+  const { error: trainError } = await actions.trainClassifier({ name: todo.name, category });
   if(trainError) { 
     console.log('Error training classifier:', trainError);
-    return;
   }
-  classifierMemory.value = data[0] as ClassifierMemory;
 }
 
 async function handleCheckChanged(id: number, checked: boolean) {
@@ -123,6 +131,7 @@ async function onClearCompleted() {
             :key="todo.id"
             :id="todo.id"
             :name="todo.name"
+            :is-classifying="todo.isClassifying"
             v-model:checked="todo.checked"
             @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
             v-model:selectedCategory="todo.category"
@@ -139,6 +148,7 @@ async function onClearCompleted() {
               :key="todo.id"
               :id="todo.id"
               :name="todo.name"
+              :is-classifying="todo.isClassifying"
               v-model:checked="todo.checked"
               @update:checked="(checked: boolean) => handleCheckChanged(todo.id, checked)"
               v-model:selectedCategory="todo.category"
